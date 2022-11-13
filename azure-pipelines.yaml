@@ -1,0 +1,54 @@
+# Azure DevOps YAML Pipeline from Bow Data Toolkits
+
+trigger:
+    branches:
+        include:
+            - "*"
+
+
+resources:
+    repositories:
+        - repository: bowdata-toolkits
+          type: git
+          name: toolkits/bowdata.toolkits.azure-pipelines
+          ref: refs/heads/master
+        - repository: bowdata-go-pipelines
+          type: git
+          name: toolkits/bowdata.toolkits.go_pipeline_templates
+          ref: refs/heads/master
+
+
+
+parameters:
+  - name: workingDirectory
+    default: $(Build.SourcesDirectory)
+  - name: preRelease
+    default: "a"
+# general params
+  - name: logLevel
+    default: debug
+    type: string
+    displayName: "Log Level"
+    values:
+      - panic
+      - fatal
+      - error
+      - warn
+      - info
+      - debug
+      - trace
+  - name: buildStageName
+    default: Build
+## Integration Test Stage Parameters
+  - name: integrationTestStages
+    type: stageList
+    default: []
+## Version Stage Parameters
+  - name: useForceVersion
+    type: boolean
+    default: false
+  - name: preRelease
+    default: "a"
+  - name: versionStageDependsOn
+    type: object
+    default: ['Build']
