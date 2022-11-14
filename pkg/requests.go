@@ -9,7 +9,7 @@ import (
 )
 
 
-func handleIncomingRequest(conn net.Conn) {
+func handleIncomingRequest(conn net.Conn) error {
     // store incoming data
     buffer := make([]byte, 1024)
     _, err := conn.Read(buffer)
@@ -17,7 +17,8 @@ func handleIncomingRequest(conn net.Conn) {
         log.Fatal(err)
         return err
     }
-    request := Message.parse(buffer)
+    receivedMsg := new(Message)
+    request := receivedMsg.parse(buffer)
     // respond
     response := getResponse(request)
     response.write(conn)
@@ -40,9 +41,9 @@ type Message struct {
 }
 
 
-func (t Message) write(conn net.Conn) string {
+func (t Message) write(conn net.Conn) error {
     jsonStr, _ := json.Marshal(t)
-    _, err = conn.Write([]byte(jsonStr))
+    _, err := conn.Write([]byte(jsonStr))
         if err != nil {
             log.Fatal(err)
             return err
@@ -51,10 +52,9 @@ func (t Message) write(conn net.Conn) string {
 }
 
 
-func (t Message) parse(data []byte) {
-    msg := new(Message)
-    json.Unmarshal(data, msg)
-    return msg
+func (t Message) parse(data []byte) Message {
+    json.Unmarshal(data, t)
+    return t
 }
 
 

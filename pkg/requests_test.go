@@ -7,36 +7,36 @@ import (
 )
 
 
-func getTests() map[string]struct {
-    tests := map[string]struct {
+type testCases map[string]struct {
         content string
         metadata Metadata
-    }{
-        "affirmative test": {
-            content: "this is the request body",
-            metadata: Metadata{
-                time: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST")
-                tag: "salsa"
-            }
-        },
-        "failing test content": {
-            data: "this field is wrongly named",
-            metadata: Metadata{
-                time: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST")
-                tag: "salsa"
-            }
-        },
-        "failing request metadata": {
-            content: "this is the request body",
-            metadata: Metadata{
-                time: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST")
-                dog: "this field is named wrongly"
-            }
-        },
-    }
-    return tests
 }
 
+var tests testCases
+
+tests = {
+    "affirmative test": {
+        content: "this is the request body",
+        metadata: Metadata{
+            time: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST")
+            tag: "salsa"
+            }
+    },
+    "failing test content": {
+        data: "this field is wrongly named",
+        metadata: Metadata{
+            time: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST")
+            tag: "salsa"
+            }
+    },
+    "failing request metadata": {
+        content: "this is the request body",
+        metadata: Metadata{
+            time: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST")
+            dog: "this field is named wrongly"
+            }
+    },
+}
 
 
 func TestParse(t *testing.T) {
