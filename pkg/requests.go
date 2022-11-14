@@ -27,15 +27,15 @@ func handleIncomingRequest(conn net.Conn) {
 }
 
 
-type Metadata {
+type Metadata struct {
     time string `json:"time"`
     tag string `json:"tag"`
 }
 
 
-type Message {
+type Message struct {
     content string `json:"content"`
-    metadata []Metadata `json:"metadata"`
+    metadata Metadata `json:"metadata"`
 }
 
 
@@ -51,11 +51,12 @@ func (t Message) parse(data []byte) {
     return msg
 }
 
-func getResponse(input Message[]) Message {
+
+func getResponse(input Message) Message {
     msg := Message{
         content: input.content,
         metadata: Metadata{
-            time: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST")
+            time: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
             tag: "mambo"
         }
     }
