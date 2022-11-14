@@ -1,17 +1,17 @@
 package cmd
 
 import (
-	"fmt"
 	"log"
 	"net"
 	"os"
+	"os/signal"
 
 	"github.com/spf13/cobra"
 
 	"bowdata.test.go_tcp_echo/pkg"
 )
 
-var outputCase string
+var host, port string
 
 func NewRootCmd() *cobra.Command {
 	cmd:= &cobra.Command{
@@ -35,7 +35,7 @@ func NewRootCmd() *cobra.Command {
                     log.Fatal(err)
                     return err
                 }
-                go handleIncomingRequest(conn)
+                go pkg.handleIncomingRequest(conn)
                 <-c
                 continue
             }

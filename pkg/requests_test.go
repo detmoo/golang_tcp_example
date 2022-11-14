@@ -12,9 +12,7 @@ type testCases map[string]struct {
         metadata Metadata
 }
 
-var tests testCases
-
-tests = {
+var tests testCases = {
     "affirmative test": {
         content: "this is the request body",
         metadata: Metadata{
