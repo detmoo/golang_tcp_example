@@ -14,7 +14,7 @@ resources:
           ref: refs/heads/master
         - repository: bowdata-go-pipelines
           type: git
-          name: toolkits/bowdata.toolkits.go_pipeline_templates
+          name: toolkits/bowdata.toolkits.go-pipeline-templates
           ref: refs/heads/master
 
 
