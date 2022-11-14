@@ -35,7 +35,7 @@ func NewRootCmd() *cobra.Command {
                     log.Fatal(err)
                     return err
                 }
-                go pkg.handleIncomingRequest(conn)
+                go pkg.HandleIncomingRequest(conn)
                 <-c
                 continue
             }

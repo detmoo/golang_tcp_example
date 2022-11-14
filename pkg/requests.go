@@ -9,7 +9,7 @@ import (
 )
 
 
-func handleIncomingRequest(conn net.Conn) error {
+func HandleIncomingRequest(conn net.Conn) error {
     // store incoming data
     buffer := make([]byte, 1024)
     _, err := conn.Read(buffer)
