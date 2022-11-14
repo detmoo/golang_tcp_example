@@ -22,8 +22,6 @@ resources:
 parameters:
   - name: workingDirectory
     default: $(Build.SourcesDirectory)
-  - name: preRelease
-    default: "a"
 # general params
   - name: logLevel
     default: debug
