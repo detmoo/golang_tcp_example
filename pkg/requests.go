@@ -3,9 +3,8 @@ package pkg
 
 import (
     "encoding/json"
-	"fmt"
+    "log"
 	"net"
-	"strings"
 	"time"
 )
 
@@ -16,14 +15,16 @@ func handleIncomingRequest(conn net.Conn) {
     _, err := conn.Read(buffer)
     if err != nil {
         log.Fatal(err)
+        return err
     }
-    request := parse(buffer)
+    request := Message.parse(buffer)
     // respond
     response := getResponse(request)
-    write(response)
+    response.write(conn)
 
     // close conn
     conn.Close()
+    return nil
 }
 
 
@@ -39,9 +40,14 @@ type Message struct {
 }
 
 
-func (t Message) write() string {
+func (t Message) write(conn net.Conn) string {
     jsonStr, _ := json.Marshal(t)
-    conn.Write([]byte(jsonStr))
+    _, err = conn.Write([]byte(jsonStr))
+        if err != nil {
+            log.Fatal(err)
+            return err
+        }
+    return nil
 }
 
 
