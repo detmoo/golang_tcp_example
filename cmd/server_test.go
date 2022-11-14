@@ -11,8 +11,8 @@ import (
 )
 
 
-string HOST = "localhost"
-string PORT = "9001"
+var HOST string = "localhost"
+var PORT string = "9001"
 
 func TestEchoServer(t *testing.T) {
 	rootCmd := NewRootCmd()

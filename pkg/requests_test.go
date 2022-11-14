@@ -7,7 +7,7 @@ import (
 )
 
 
-func getTests() tests(map[string]struct) {
+func getTests() (tests map[string]struct) {
     tests := map[string]struct {
         content string
         metadata Metadata

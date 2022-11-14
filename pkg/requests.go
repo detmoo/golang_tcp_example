@@ -57,8 +57,8 @@ func getResponse(input Message) Message {
         content: input.content,
         metadata: Metadata{
             time: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
-            tag: "mambo"
-        }
+            tag: "mambo",
+        },
     }
     return msg
 }
