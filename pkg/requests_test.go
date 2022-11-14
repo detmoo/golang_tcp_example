@@ -7,12 +7,12 @@ import (
 )
 
 
-type testCases map[string]struct {
+type TestCases map[string]struct {
         content string
         metadata Metadata
 }
 
-var tests testCases = {
+var tests TestCases{
     "affirmative test": {
         content: "this is the request body",
         metadata: Metadata{

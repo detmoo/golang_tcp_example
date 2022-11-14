@@ -13,14 +13,14 @@ develop:
 	go get -u ./...
 
 lint:
-	go mod edit -replace bowdata.test.go_module_template/pkg=../pkg
-	go mod edit -replace bowdata.test.go_module_template/cmd=../cmd
+	go mod edit -replace bowdata.test.go_tcp_echo/pkg=../pkg
+	go mod edit -replace bowdata.test.go_tcp_echo/cmd=../cmd
 	go vet -json ./...
 	go install honnef.co/go/tools/cmd/staticcheck@latest && $(GOPATH)/bin/staticcheck ./...
 
 test:
-	go mod edit -replace bowdata.test.go_module_template/pkg=../pkg
-	go mod edit -replace bowdata.test.go_module_template/cmd=../cmd
+	go mod edit -replace bowdata.test.go_tcp_echo/pkg=../pkg
+	go mod edit -replace bowdata.test.go_tcp_echo/cmd=../cmd
 	go clean -testcache
 	go test ./...
 
