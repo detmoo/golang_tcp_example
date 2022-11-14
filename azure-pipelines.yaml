@@ -20,8 +20,6 @@ resources:
 
 
 parameters:
-  - name: workingDirectory
-    default: $(Build.SourcesDirectory)
 # general params
   - name: logLevel
     default: debug
@@ -37,16 +35,55 @@ parameters:
       - trace
   - name: buildStageName
     default: Build
-## Integration Test Stage Parameters
+  - name: WorkingDirectory
+    default: $(Build.SourcesDirectory)
+  - name: goModuleName
+    default: bowdata.test.go_module_template
+## Integration Test Stage Parameter Set
   - name: integrationTestStages
     type: stageList
     default: []
-## Version Stage Parameters
-  - name: useForceVersion
-    type: boolean
-    default: false
-  - name: preRelease
-    default: "a"
+## Version Stage Parameter Set
+  - name: _version_stage_params
+    type: object
+    default:
+      - versionStageName
+      - versionStageDisplayName
+      - versionStageDependsOn
+      - versionStageCondition
+      - versionStageVariables
+      - preRelease
+      - useForceVersion
+  - name: versionStageName
+    default: Version
+  - name: versionStageDisplayName
+    default: 'Version Stage'
   - name: versionStageDependsOn
     type: object
     default: ['Build']
+  - name: versionStageCondition
+    default: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  - name: versionStageVariables
+    type: object
+    default: {}
+  - name: preRelease
+    default: "a"
+  - name: useForceVersion
+    type: boolean
+    default: false
+
+
+stages:
+  - template: /pipelines/module-pipeline.yaml@bowdata-go-pipelines
+    parameters:
+      logLevel: ${{parameters.logLevel}}
+      buildStageName: ${{parameters.buildStageName}}
+      workingDirectory: ${{parameters.WorkingDirectory}}
+
+  - ${{ parameters.integrationTestStages }}
+
+  - template: /python/stages/version-stage.yaml@bowdata-toolkits
+    parameters:
+      ${{ each pair in parameters }}:
+        ${{if and(or(containsValue(parameters._version_stage_params, pair.key), containsValue(parameters._general_params, pair.key)), not(containsValue(parameters._ignore_params, pair.key)))}}:
+          ${{pair.key}}: ${{pair.value}}
