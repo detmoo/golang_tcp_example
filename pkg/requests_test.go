@@ -49,7 +49,7 @@ func TestGetResponse(t *testing.T) {
 	for testName, test := range tests {
 		t.Logf("Running test case %s", testName)
 		input := Message(test)
-		res := getResponse(input)
+		res := getResponse(&input)
 		if res.content != input.content{
 			t.Errorf("Expected content: %s, but got: %s", input.content, res.content)
 		}
