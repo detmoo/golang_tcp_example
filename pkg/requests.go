@@ -56,9 +56,8 @@ func (t Message) write(conn net.Conn) error {
 }
 
 
-func (*t Message) parse(data []byte) Message {
+func (t *Message) parse(data []byte) {
     json.Unmarshal(data, t)
-    return t
 }
 
 
