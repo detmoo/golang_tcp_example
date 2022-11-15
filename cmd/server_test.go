@@ -22,8 +22,13 @@ func TestEchoServer(t *testing.T) {
 	rootCmd.Execute()
 	out, err := io.ReadAll(b)
 	if err != nil {
+	    fmt.Fprint("Read Buffer Error:", err)
 		t.Fatal(err)
 	}
-	connClient, _ = net.Dial("TCP", HOST+":"+PORT)
-	fmt.Fprint(connClient, text+"\n")
+	conn, err := net.Dial("tcp", HOST+":"+PORT)
+	if err != nil {
+	    fmt.Fprint("Dial Error:", err)
+		t.Fatal(err)
+	}
+	fmt.Fprint(conn, text+"\n")
 }

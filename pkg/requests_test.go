@@ -7,27 +7,27 @@ import (
 )
 
 
-type TestCases map[string]struct {
+type TestCase struct {
         content string
         metadata Metadata
 }
 
-var tests TestCases{
-    "affirmative test": {
+var tests = map[string]TestCase{
+    "affirmative test": TestCase{
         content: "this is the request body",
         metadata: Metadata{
             time: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST")
             tag: "salsa"
             }
     },
-    "failing test content": {
+    "failing test content": TestCase{
         data: "this field is wrongly named",
         metadata: Metadata{
             time: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST")
             tag: "salsa"
             }
     },
-    "failing request metadata": {
+    "failing request metadata": TestCase{
         content: "this is the request body",
         metadata: Metadata{
             time: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST")
