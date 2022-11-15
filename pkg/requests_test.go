@@ -57,6 +57,7 @@ func TestGetResponse(t *testing.T) {
 		res := getResponse(input)
 		if res.content != input.content{
 			t.Errorf("Expected content: %s, but got: %s", input.content, res.content)
+		}
 	    if res.metadata.tag != "mambo" {
 			t.Errorf("Expected metadata tag: %s, but got: %s", "mambo", res.metadata.tag)
 		}

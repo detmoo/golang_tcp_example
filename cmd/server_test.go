@@ -31,5 +31,5 @@ func TestEchoServer(t *testing.T) {
 	    fmt.Println("Dial Error:", err)
 		t.Fatal(err)
 	}
-	fmt.Fprint(conn, text+"\n")
+	fmt.Fprint(conn, REQUEST_CONTENT+"\n")
 }
