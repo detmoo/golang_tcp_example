@@ -50,11 +50,11 @@ func TestGetResponse(t *testing.T) {
 		t.Logf("Running test case %s", testName)
 		input := Message(test)
 		res := getResponse(&input)
-		if res.content != input.content{
-			t.Errorf("Expected content: %s, but got: %s", input.content, res.content)
+		if res.Content != input.Content{
+			t.Errorf("Expected content: %s, but got: %s", input.Content, res.Content)
 		}
-	    if res.metadata.tag != "mambo" {
-			t.Errorf("Expected metadata tag: %s, but got: %s", "mambo", res.metadata.tag)
+	    if res.Metadata.Tag != "mambo" {
+			t.Errorf("Expected metadata tag: %s, but got: %s", "mambo", res.Metadata.Tag)
 		}
 	}
 }
