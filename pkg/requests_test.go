@@ -17,15 +17,15 @@ var tests = map[string]TestCase{
     "affirmative test A": TestCase{
         content: "this is the request body",
         metadata: MetadataSchema{
-            timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
-            tag: "salsa",
+            Timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
+            Tag: "salsa",
             },
     },
     "affirmative test B": TestCase{
         content: "this is the request body",
         metadata: MetadataSchema{
-            timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
-            tag: "salsa",
+            Timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
+            Tag: "salsa",
             },
     },
 }
