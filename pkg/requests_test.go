@@ -34,7 +34,7 @@ var tests = map[string]TestCase{
 func TestParse(t *testing.T) {
 	for testName, test := range tests {
 		t.Logf("Running test case %s", testName)
-		expectation := Message{content: test.content, metadata: test.metadata}
+		expectation := Message(test)
 		jsonStr, _ := json.Marshal(expectation)
 		msg := new(Message)
 		res := msg.parse(jsonStr)
@@ -48,7 +48,7 @@ func TestParse(t *testing.T) {
 func TestGetResponse(t *testing.T) {
 	for testName, test := range tests {
 		t.Logf("Running test case %s", testName)
-		input := Message{content: test.content, metadata: test.metadata}
+		input := Message(test)
 		res := getResponse(input)
 		if res.content != input.content{
 			t.Errorf("Expected content: %s, but got: %s", input.content, res.content)

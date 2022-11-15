@@ -33,15 +33,15 @@ func HandleIncomingRequest(conn net.Conn) error {
 }
 
 
-type Metadata struct {
-    timestamp string `json:"timestamp"`
-    tag string `json:"tag"`
+type MetadataSchema struct {
+    Timestamp string `json:"timestamp"`
+    Tag string `json:"tag"`
 }
 
 
 type Message struct {
-    content string `json:"content"`
-    metadata Metadata `json:"metadata"`
+    Content string `json:"content"`
+    Metadata MetadataSchema `json:"metadata"`
 }
 
 
@@ -56,7 +56,7 @@ func (t Message) write(conn net.Conn) error {
 }
 
 
-func (t Message) parse(data []byte) Message {
+func (*t Message) parse(data []byte) Message {
     json.Unmarshal(data, t)
     return t
 }
@@ -64,10 +64,10 @@ func (t Message) parse(data []byte) Message {
 
 func getResponse(input Message) Message {
     msg := Message{
-        content: input.content,
-        metadata: Metadata{
-            timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
-            tag: "mambo",
+        Content: input.Content,
+        Metadata: MetadataSchema{
+            Timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
+            Tag: "mambo",
         },
     }
     return msg
