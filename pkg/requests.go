@@ -72,12 +72,18 @@ func getResponse(input *Message) Message {
 }
 
 
-func DeferUserInterrupt() {
-    interrupts := make(chan os.Signal, 1)
-    signal.Notify(interrupts, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
-    go func() {
-        interuption := <-interrupts
-        fmt.Println(interuption)
+func DeferUserInterrupt(timeout int) {
+    ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
+    defer stop()
+
+    select {
+    case <-time.After(timeout * time.Second):
+        fmt.Println("timeout signal received")
+        stop()
         os.Exit(0)
-    }()
+    case <-ctx.Done():
+		stop()
+		fmt.Println("unix signal received")
+		os.Exit(0)
+    }
 }

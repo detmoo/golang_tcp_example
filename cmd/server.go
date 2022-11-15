@@ -26,7 +26,7 @@ func NewRootCmd() *cobra.Command {
             defer listen.Close()
 
             // initialise user interrupt
-            pkg.DeferUserInterrupt()
+            go pkg.DeferUserInterrupt(10)
 
             // an infinite loop of incoming connections
             for {
