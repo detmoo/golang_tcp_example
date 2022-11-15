@@ -4,7 +4,7 @@ import (
 	"log"
 	"net"
 	"os"
-    "timeout"
+    "time"
 
 	"github.com/spf13/cobra"
 
@@ -13,6 +13,7 @@ import (
 
 var host, port string
 var timeout time.Duration = (10 * time.Second)
+
 
 func NewRootCmd() *cobra.Command {
 	cmd:= &cobra.Command{
