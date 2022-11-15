@@ -16,21 +16,21 @@ var tests = map[string]TestCase{
     "affirmative test": TestCase{
         content: "this is the request body",
         metadata: Metadata{
-            time: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST")
+            time: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
             tag: "salsa"
             }
     },
     "failing test content": TestCase{
         data: "this field is wrongly named",
         metadata: Metadata{
-            time: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST")
+            time: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
             tag: "salsa"
             }
     },
     "failing request metadata": TestCase{
         content: "this is the request body",
         metadata: Metadata{
-            time: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST")
+            time: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
             dog: "this field is named wrongly"
             }
     },
