@@ -14,25 +14,18 @@ type TestCase struct {
 }
 
 var tests = map[string]TestCase{
-    "affirmative test": TestCase{
+    "affirmative test A": TestCase{
         content: "this is the request body",
         metadata: Metadata{
             timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
             tag: "salsa",
             },
     },
-    "failing test content": TestCase{
-        data: "this field is wrongly named",
-        metadata: Metadata{
-            timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
-            tag: "salsa",
-            },
-    },
-    "failing request metadata": TestCase{
+    "affirmative test B": TestCase{
         content: "this is the request body",
         metadata: Metadata{
             timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
-            dog: "this field is named wrongly",
+            tag: "salsa",
             },
     },
 }

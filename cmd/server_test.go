@@ -6,8 +6,6 @@ import (
 	"io"
 	"net"
 	"testing"
-
-	"bowdata.test.go_tcp_echo/pkg"
 )
 
 
