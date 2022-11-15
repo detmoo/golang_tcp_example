@@ -26,9 +26,12 @@ func NewRootCmd() *cobra.Command {
             // defer close listener
             defer listen.Close()
 
-            // control an infinite loop of incoming connections
-            c := make(chan os.Signal)
-            signal.Notify(c, os.Interrupt)
+            // initialise user interrupt
+            DeferUserInterrupt()
+
+                <-c
+
+            // an infinite loop of incoming connections
             for {
                 conn, err := listen.Accept()
                 if err != nil {
@@ -36,8 +39,6 @@ func NewRootCmd() *cobra.Command {
                     return err
                 }
                 go pkg.HandleIncomingRequest(conn)
-                <-c
-                continue
             }
             return nil
 		},

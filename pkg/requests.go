@@ -5,6 +5,7 @@ import (
     "encoding/json"
     "log"
 	"net"
+	"syscall"
 	"time"
 )
 
@@ -68,3 +69,13 @@ func getResponse(input Message) Message {
     }
     return msg
 }
+
+
+func DeferUserInterrupt()
+    interrupts := make(chan os.Signal, 1)
+    signal.Notify(interrupts, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
+    go func() {
+        interuption := <-interrupts
+        fmt.Println(interuption)
+        os.Exit(0)
+    }()
