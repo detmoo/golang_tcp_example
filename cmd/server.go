@@ -4,7 +4,6 @@ import (
 	"log"
 	"net"
 	"os"
-	"os/signal"
 
 	"github.com/spf13/cobra"
 
