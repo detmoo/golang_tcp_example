@@ -2,6 +2,7 @@
 package pkg
 
 import (
+    "context"
     "encoding/json"
     "log"
     "fmt"
@@ -72,7 +73,7 @@ func getResponse(input *Message) Message {
 }
 
 
-func DeferUserInterrupt(timeout int) {
+func DeferUserInterrupt(timeout int64) {
     ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
     defer stop()
 

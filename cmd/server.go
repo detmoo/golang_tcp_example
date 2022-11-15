@@ -11,6 +11,8 @@ import (
 )
 
 var host, port string
+var timeoutSeconds int64 = 10
+
 
 func NewRootCmd() *cobra.Command {
 	cmd:= &cobra.Command{
@@ -26,7 +28,7 @@ func NewRootCmd() *cobra.Command {
             defer listen.Close()
 
             // initialise user interrupt
-            go pkg.DeferUserInterrupt(10)
+            go pkg.DeferUserInterrupt(timeoutSeconds)
 
             // an infinite loop of incoming connections
             for {
