@@ -68,7 +68,6 @@ func getResponse(input *Message) Message {
         Timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
         Tag: "mambo",
         },
-    }
     return msg
 }
 
