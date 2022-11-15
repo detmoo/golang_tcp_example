@@ -37,7 +37,6 @@ func NewRootCmd() *cobra.Command {
                 }
                 go pkg.HandleIncomingRequest(conn)
             }
-            return nil
 		},
 	}
 	cmd.Flags().StringVar(&host, "host", "localhost", "host IP address for the listener")

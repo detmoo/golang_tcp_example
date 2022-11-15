@@ -37,7 +37,7 @@ func TestParse(t *testing.T) {
 		expectation := Message{content: test.content, metadata: test.metadata}
 		jsonStr, _ := json.Marshal(expectation)
 		msg := new(Message)
-		res := msg.parse(byte(jsonStr))
+		res := msg.parse(jsonStr)
 		if res != expectation{
 			t.Errorf("Expected result: %s, but got: %s", expectation, res)
 		}
