@@ -71,7 +71,7 @@ func getResponse(input Message) Message {
 }
 
 
-func DeferUserInterrupt()
+func DeferUserInterrupt() {
     interrupts := make(chan os.Signal, 1)
     signal.Notify(interrupts, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
     go func() {
@@ -79,3 +79,4 @@ func DeferUserInterrupt()
         fmt.Println(interuption)
         os.Exit(0)
     }()
+}
