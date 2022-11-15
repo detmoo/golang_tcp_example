@@ -9,21 +9,21 @@ import (
 
 
 type TestCase struct {
-        content string
-        metadata MetadataSchema
+        Content string
+        Metadata MetadataSchema
 }
 
 var tests = map[string]TestCase{
     "affirmative test A": TestCase{
-        content: "this is the request body",
-        metadata: MetadataSchema{
+        Content: "this is the request body",
+        Metadata: MetadataSchema{
             Timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
             Tag: "salsa",
             },
     },
     "affirmative test B": TestCase{
-        content: "this is the request body",
-        metadata: MetadataSchema{
+        Content: "this is the request body",
+        Metadata: MetadataSchema{
             Timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
             Tag: "salsa",
             },
