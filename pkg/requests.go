@@ -61,12 +61,12 @@ func (t *Message) parse(data []byte) {
 }
 
 
-func getResponse(input Message) Message {
-    msg := Message{
-        Content: input.Content,
-        Metadata: MetadataSchema{
-            Timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
-            Tag: "mambo",
+func getResponse(input *Message) Message {
+    msg := new(Message)
+    msg.Content = input.Content
+    msg.Metadata = MetadataSchema{
+        Timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
+        Tag: "mambo",
         },
     }
     return msg

@@ -16,14 +16,14 @@ type TestCase struct {
 var tests = map[string]TestCase{
     "affirmative test A": TestCase{
         content: "this is the request body",
-        metadata: Metadata{
+        metadata: MetadataSchema{
             timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
             tag: "salsa",
             },
     },
     "affirmative test B": TestCase{
         content: "this is the request body",
-        metadata: Metadata{
+        metadata: MetadataSchema{
             timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
             tag: "salsa",
             },
