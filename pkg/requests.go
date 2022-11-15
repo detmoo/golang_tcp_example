@@ -30,7 +30,7 @@ func HandleIncomingRequest(conn net.Conn) error {
 
 
 type Metadata struct {
-    time string `json:"time"`
+    timestamp string `json:"timestamp"`
     tag string `json:"tag"`
 }
 
@@ -62,7 +62,7 @@ func getResponse(input Message) Message {
     msg := Message{
         content: input.content,
         metadata: Metadata{
-            time: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
+            timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
             tag: "mambo",
         },
     }
