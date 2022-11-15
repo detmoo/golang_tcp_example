@@ -17,7 +17,7 @@ func NewRootCmd() *cobra.Command {
 		Use: "tcp-echo-server",
 		Short: "Echos the argument value in uppercase, and adds metadata to the response",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			listen, err := net.Listen("TCP", host+":"+port)
+			listen, err := net.Listen("tcp", host+":"+port)
             if err != nil {
                 log.Fatal(err)
                 return err
