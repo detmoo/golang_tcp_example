@@ -10,7 +10,7 @@ import (
 
 type TestCase struct {
         content string
-        metadata Metadata
+        metadata MetadataSchema
 }
 
 var tests = map[string]TestCase{

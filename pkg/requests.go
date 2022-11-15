@@ -22,9 +22,9 @@ func HandleIncomingRequest(conn net.Conn) error {
         return err
     }
     receivedMsg := new(Message)
-    request := receivedMsg.parse(buffer)
+    receivedMsg.parse(buffer)
     // respond
-    response := getResponse(request)
+    response := getResponse(receivedMsg)
     response.write(conn)
 
     // close conn
