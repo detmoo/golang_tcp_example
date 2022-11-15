@@ -73,12 +73,12 @@ func getResponse(input *Message) Message {
 }
 
 
-func DeferUserInterrupt(timeout int64) {
+func DeferUserInterrupt(timeout time.Duration) {
     ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
     defer stop()
 
     select {
-    case <-time.After(timeout * time.Second):
+    case <-time.After(timeout):
         fmt.Println("timeout signal received")
         stop()
         os.Exit(0)
