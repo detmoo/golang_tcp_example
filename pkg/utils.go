@@ -12,7 +12,7 @@ import (
 )
 
 
-func DeferCloseListener(listener *net.Listener, timeout time.Duration, parent context.Context) string {
+func DeferCloseListener(listener net.Listener, timeout time.Duration, parent context.Context) string {
     ctx, stop := signal.NotifyContext(parent, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
     defer stop()
 

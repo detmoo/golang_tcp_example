@@ -27,7 +27,7 @@ func NewRootCmd() *cobra.Command {
             }
             // defer close listener
             ctx := context.Background()
-            go pkg.DeferCloseListener(&listener, timeout, ctx)
+            go pkg.DeferCloseListener(listener, timeout, ctx)
 
             // await connections
             for {
