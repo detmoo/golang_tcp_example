@@ -1,5 +1,5 @@
 // Desc: TCP echo server and client
-package utils
+package pkg
 
 import (
     "context"

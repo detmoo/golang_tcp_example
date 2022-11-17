@@ -1,5 +1,5 @@
 // Test
-package utils
+package pkg
 
 import (
         "encoding/json"
