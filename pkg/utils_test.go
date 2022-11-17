@@ -48,9 +48,9 @@ func TestDeferUserInterrupt(t *testing.T) {
         }
 		ctx := context.Background()
 		ctx, cancelCtx := context.WithTimeout(ctx, test.testTimeout)
-		action := DeferCloseListener(&listener, listenerTimeout, ctx)
-	    if action != expected{
-			t.Errorf("Expected result: %s, but got: %s", expected, action)
+		action := DeferCloseListener(&listener, test.listenerTimeout, ctx)
+	    if action != test.expected{
+			t.Errorf("Expected result: %s, but got: %s", test.expected, action)
 		}
 	}
 }
