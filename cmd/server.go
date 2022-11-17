@@ -9,6 +9,7 @@ import (
 	"github.com/spf13/cobra"
 
 	"bowdata.test.go_tcp_echo/pkg"
+	"bowdata.test.go_tcp_echo/utils"
 )
 
 var host, port string
@@ -20,22 +21,21 @@ func NewRootCmd() *cobra.Command {
 		Use: "tcp-echo-server",
 		Short: "Echos the argument value in uppercase, and adds metadata to the response",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			listen, err := net.Listen("tcp", host+":"+port)
+			listener, err := net.Listen("tcp", host+":"+port)
             if err != nil {
                 log.Fatal(err)
                 return err
             }
             // defer close listener
-            defer listen.Close()
+            ctx := context.Background()
+            go pkg.DeferCloseListener(&listener, timeout, ctx)
 
-            // initialise user interrupt
-            go pkg.DeferUserInterrupt(timeout)
-
-            // an infinite loop of incoming connections
+            // await connections
             for {
-                conn, err := listen.Accept()
+                conn, err := listener.Accept()
                 if err != nil {
                     log.Fatal(err)
+                    fmt.Println(err)
                     return err
                 }
                 go pkg.HandleIncomingRequest(conn)

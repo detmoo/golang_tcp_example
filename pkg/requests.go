@@ -14,26 +14,6 @@ import (
 )
 
 
-func HandleIncomingRequest(conn net.Conn) error {
-    // store incoming data
-    buffer := make([]byte, 1024)
-    _, err := conn.Read(buffer)
-    if err != nil {
-        log.Fatal(err)
-        return err
-    }
-    receivedMsg := new(Message)
-    receivedMsg.parse(buffer)
-    // respond
-    response := getResponse(receivedMsg)
-    response.write(conn)
-
-    // close conn
-    conn.Close()
-    return nil
-}
-
-
 type MetadataSchema struct {
     Timestamp string `json:"timestamp"`
     Tag string `json:"tag"`
@@ -62,6 +42,26 @@ func (t *Message) parse(data []byte) {
 }
 
 
+func HandleIncomingRequest(conn net.Conn) error {
+    // store incoming data
+    buffer := make([]byte, 1024)
+    _, err := conn.Read(buffer)
+    if err != nil {
+        log.Fatal(err)
+        return err
+    }
+    receivedMsg := new(Message)
+    receivedMsg.parse(buffer)
+    // respond
+    response := getResponse(receivedMsg)
+    response.write(conn)
+
+    // close conn
+    conn.Close()
+    return nil
+}
+
+
 func getResponse(input *Message) Message {
     msg := new(Message)
     msg.Content = input.Content
@@ -70,21 +70,4 @@ func getResponse(input *Message) Message {
         Tag: "mambo",
         }
     return *msg
-}
-
-
-func DeferUserInterrupt(timeout time.Duration) {
-    ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
-    defer stop()
-
-    select {
-    case <-time.After(timeout):
-        fmt.Println("timeout signal received")
-        stop()
-        os.Exit(0)
-    case <-ctx.Done():
-		stop()
-		fmt.Println("unix signal received")
-		os.Exit(0)
-    }
 }

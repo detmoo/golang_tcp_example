@@ -6,6 +6,7 @@ import (
 	"io"
 	"net"
 	"testing"
+	"time"
 )
 
 
@@ -24,11 +25,12 @@ func TestEchoServer(t *testing.T) {
 	    fmt.Println("Read Buffer Error:", err)
 		t.Fatal(err)
 	}
+	time.Sleep(5 * time.Second)  // to ensure the listener to ready to receive client connections
 	conn, err := net.Dial("tcp", HOST+":"+PORT)
 	if err != nil {
 	    fmt.Println("Dial Error:", err)
 		t.Fatal(err)
 	}
-	fmt.Fprint(conn, REQUEST_CONTENT+"\n")
+	fmt.Fprintf(conn, REQUEST_CONTENT+"\n")
 	fmt.Println("This is the out string:", out)
 }
