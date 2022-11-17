@@ -8,20 +8,13 @@ import (
 )
 
 
-type TestCase struct {
+type requestsTestCase struct {
         Content string
         Metadata MetadataSchema
 }
 
-var tests = map[string]TestCase{
-    "affirmative test A": TestCase{
-        Content: "this is the request body",
-        Metadata: MetadataSchema{
-            Timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
-            Tag: "salsa",
-            },
-    },
-    "affirmative test B": TestCase{
+var requestsTests = map[string]requestsTestCase{
+    "affirmative test": requestsTestCase{
         Content: "this is the request body",
         Metadata: MetadataSchema{
             Timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
@@ -32,7 +25,7 @@ var tests = map[string]TestCase{
 
 
 func TestParse(t *testing.T) {
-	for testName, test := range tests {
+	for testName, test := range requestsTests {
 		t.Logf("Running test case %s", testName)
 		expectation := Message(test)
 		jsonStr, _ := json.Marshal(expectation)

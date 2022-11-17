@@ -18,7 +18,7 @@ type utilsTestCase struct {
         expected string
 }
 
-var tests = map[string]utilsTestCase{
+var utilsTests = map[string]utilsTestCase{
     "expect timeout": utilsTestCase{
         testTimeout: (12 * time.Second), // greater than the listener timeout
         listenerTimeout: (4 * time.Second),
@@ -37,7 +37,7 @@ var tests = map[string]utilsTestCase{
 
 
 func TestDeferUserInterrupt(t *testing.T) {
-	for testName, test := range tests {
+	for testName, test := range utilsTests {
 		t.Logf("Running test case %s", testName)
 
 		listener, err := net.Listen("tcp", test.host+":"+test.port)
