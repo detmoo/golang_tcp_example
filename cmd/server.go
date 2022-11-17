@@ -9,7 +9,6 @@ import (
 	"github.com/spf13/cobra"
 
 	"bowdata.test.go_tcp_echo/pkg"
-	"bowdata.test.go_tcp_echo/utils"
 )
 
 var host, port string
