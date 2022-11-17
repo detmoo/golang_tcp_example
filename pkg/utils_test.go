@@ -24,14 +24,14 @@ var utilsTests = map[string]utilsTestCase{
         testTimeout: (12 * time.Second), // greater than the listener timeout
         listenerTimeout: (4 * time.Second),
         host: "localhost",
-        port: "9001",
+        port: "9002",
         expected: "banana",
     },
     "expect signal": utilsTestCase{
         testTimeout: (4 * time.Second), // less than the listener timeout
         listenerTimeout: (12 * time.Second),
         host: "localhost",
-        port: "9001",
+        port: "9003",
         expected: "grape",
     },
 }
