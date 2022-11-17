@@ -2,27 +2,35 @@
 package pkg
 
 import (
-        "encoding/json"
+        "context"
+        "log"
+        "net"
         "testing"
         "time"
 )
 
 
-type TestCase struct {
+type utilsTestCase struct {
         testTimeout time.Duration
         listenerTimeout time.Duration
+        host string
+        port string
         expected string
 }
 
-var tests = map[string]TestCase{
-    "expect timeout": TestCase{
+var tests = map[string]utilsTestCase{
+    "expect timeout": utilsTestCase{
         testTimeout: (12 * time.Second), // greater than the listener timeout
         listenerTimeout: (4 * time.Second),
+        host: "localhost",
+        port: "9001",
         expected: "banana",
     },
-    "expect signal": TestCase{
+    "expect signal": utilsTestCase{
         testTimeout: (4 * time.Second), // less than the listener timeout
         listenerTimeout: (12 * time.Second),
+        host: "localhost",
+        port: "9001",
         expected: "grape",
     },
 }
@@ -32,7 +40,7 @@ func TestDeferUserInterrupt(t *testing.T) {
 	for testName, test := range tests {
 		t.Logf("Running test case %s", testName)
 
-		listener, err := net.Listen("tcp", host+":"+port)
+		listener, err := net.Listen("tcp", test.host+":"+test.port)
         if err != nil {
             log.Fatal(err)
             return err
