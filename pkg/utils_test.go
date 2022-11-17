@@ -3,6 +3,7 @@ package pkg
 
 import (
         "context"
+        "fmt"
         "log"
         "net"
         "testing"
@@ -43,7 +44,7 @@ func TestDeferUserInterrupt(t *testing.T) {
 		listener, err := net.Listen("tcp", test.host+":"+test.port)
         if err != nil {
             log.Fatal(err)
-            return err
+            fmt.Println(err)
         }
 		ctx := context.Background()
 		ctx, cancelCtx := context.WithTimeout(ctx, test.testTimeout)
