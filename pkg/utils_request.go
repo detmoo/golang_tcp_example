@@ -36,7 +36,7 @@ func TestDeferUserInterrupt(t *testing.T) {
         if err != nil {
             log.Fatal(err)
             return err
-
+        }
 		ctx := context.Background()
 		ctx, cancelCtx := context.WithTimeout(ctx, test.testTimeout)
 		action := DeferCloseListener(&listener, listenerTimeout, ctx)
