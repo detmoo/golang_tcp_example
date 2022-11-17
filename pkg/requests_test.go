@@ -39,7 +39,7 @@ func TestParse(t *testing.T) {
 
 
 func TestGetResponse(t *testing.T) {
-	for testName, test := range tests {
+	for testName, test := range requestsTests {
 		t.Logf("Running test case %s", testName)
 		input := Message(test)
 		res := getResponse(&input)
