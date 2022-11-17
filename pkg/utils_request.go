@@ -25,7 +25,6 @@ var tests = map[string]TestCase{
         listenerTimeout: (12 * time.Second),
         expected: "grape",
     },
-    },
 }
 
 

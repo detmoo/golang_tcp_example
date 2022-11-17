@@ -25,4 +25,5 @@ func DeferCloseListener(listener *net.Listener, timeout time.Duration, parent co
 		stop()
 		fmt.Println("cancel, interrupt or termination signal received")
 		return "grape"
+	}
 }
