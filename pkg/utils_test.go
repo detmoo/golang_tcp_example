@@ -1,41 +1,41 @@
 // Test
-package pkg
-
-import (
-        "context"
-        "fmt"
-        "log"
-        "net"
-        "testing"
-        "time"
-)
-
-
-type utilsTestCase struct {
-        testTimeout time.Duration
-        listenerTimeout time.Duration
-        host string
-        port string
-        expected string
-}
-
-var utilsTests = map[string]utilsTestCase{
-    "expect timeout": utilsTestCase{
-        testTimeout: (12 * time.Second), // greater than the listener timeout
-        listenerTimeout: (4 * time.Second),
-        host: "localhost",
-        port: "9002",
-        expected: "reason timeout: err the listener was forcibly closed",
-    },
-    "expect signal": utilsTestCase{
-        testTimeout: (4 * time.Second), // less than the listener timeout
-        listenerTimeout: (12 * time.Second),
-        host: "localhost",
-        port: "9003",
-        expected: "reason interrupted: err the listener was forcibly closed",
-    },
-}
-
+// package pkg
+//
+// import (
+//         "context"
+//         "fmt"
+//         "log"
+//         "net"
+//         "testing"
+//         "time"
+// )
+//
+//
+// type utilsTestCase struct {
+//         testTimeout time.Duration
+//         listenerTimeout time.Duration
+//         host string
+//         port string
+//         expected string
+// }
+//
+// var utilsTests = map[string]utilsTestCase{
+//     "expect timeout": utilsTestCase{
+//         testTimeout: (12 * time.Second), // greater than the listener timeout
+//         listenerTimeout: (4 * time.Second),
+//         host: "localhost",
+//         port: "9002",
+//         expected: "reason timeout: err the listener was forcibly closed",
+//     },
+//     "expect signal": utilsTestCase{
+//         testTimeout: (4 * time.Second), // less than the listener timeout
+//         listenerTimeout: (12 * time.Second),
+//         host: "localhost",
+//         port: "9003",
+//         expected: "reason interrupted: err the listener was forcibly closed",
+//     },
+// }
+//
 
 // func TestDeferUserInterrupt(t *testing.T) {
 // 	for testName, test := range utilsTests {
