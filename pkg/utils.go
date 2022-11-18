@@ -29,7 +29,7 @@ func DeferCloseListener(listener net.Listener, timeout time.Duration, closureCha
 
     closer := func(reason string) error {
         defer listener.Close()
-        err := ServerClosedError{
+        err := &ServerClosedError{
             Reason: reason,
             Err: errors.New("the listener was forcibly closed"),
         }
