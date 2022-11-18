@@ -21,22 +21,22 @@ type ServerClosedError struct{
 
 
 func (m *ServerClosedError) Error() string {
-	return fmt.Sprintf("reason %d: err %v", r.Reason, r.Err)
-}
-
-
-func closeListenerE(reason string) error {
-    defer listener.Close()
-	err := ServerClosedError{
-	    Reason: reason,
-	    Err: errors.New("the listener was forcibly closed"),
-	}
-	closureChannel <- err
-	return err
+	return fmt.Sprintf("reason %d: err %v", m.Reason, m.Err)
 }
 
 
 func DeferCloseListener(listener net.Listener, timeout time.Duration, closureChannel chan<- error, parent context.Context) error {
+
+    func closeListenerE(reason string) error {
+        defer listener.Close()
+        err := ServerClosedError{
+            Reason: reason,
+            Err: errors.New("the listener was forcibly closed"),
+        }
+        closureChannel <- err
+        return err
+    }
+
     ctx, stop := signal.NotifyContext(parent, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
     defer stop()
 
