@@ -48,7 +48,7 @@ func TestDeferUserInterrupt(t *testing.T) {
         }
         closureChannel := make(chan error)
 		ctx := context.Background()
-		ctx, cancelCtx = context.WithTimeout(ctx, test.testTimeout)
+		ctx, cancelCtx := context.WithTimeout(ctx, test.testTimeout)
 		defer cancelCtx()
 		err = DeferCloseListener(listener, test.listenerTimeout, closureChannel, ctx)
 	    if err.Error() != test.expected{
