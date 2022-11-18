@@ -20,7 +20,7 @@ type ServerClosedError struct{
 
 
 func (m *ServerClosedError) Error() string {
-	return fmt.Sprintf("reason %d: err %v", m.Reason, m.Msg)
+	return fmt.Sprintf("reason %v: err %v", m.Reason, m.Msg)
 }
 
 
