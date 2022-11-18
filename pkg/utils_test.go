@@ -37,22 +37,22 @@ var utilsTests = map[string]utilsTestCase{
 }
 
 
-func TestDeferUserInterrupt(t *testing.T) {
-	for testName, test := range utilsTests {
-		t.Logf("Running test case %s", testName)
-
-		listener, err := net.Listen("tcp", test.host+":"+test.port)
-        if err != nil {
-            log.Fatal(err)
-            fmt.Println(err)
-        }
-        closureChannel := make(chan error)
-		ctx := context.Background()
-		ctx, cancelCtx := context.WithTimeout(ctx, test.testTimeout)
-		defer cancelCtx()
-		err = DeferCloseListener(listener, test.listenerTimeout, closureChannel, ctx)
-	    if err.Error() != test.expected{
-			t.Errorf("Expected result: %s, but got: %s", test.expected, err.Error())
-		}
-	}
-}
+// func TestDeferUserInterrupt(t *testing.T) {
+// 	for testName, test := range utilsTests {
+// 		t.Logf("Running test case %s", testName)
+//
+// 		listener, err := net.Listen("tcp", test.host+":"+test.port)
+//         if err != nil {
+//             log.Fatal(err)
+//             fmt.Println(err)
+//         }
+//         closureChannel := make(chan error)
+// 		ctx := context.Background()
+// 		ctx, cancelCtx := context.WithTimeout(ctx, test.testTimeout)
+// 		defer cancelCtx()
+// 		err = DeferCloseListener(listener, test.listenerTimeout, closureChannel, ctx)
+// 	    if err.Error() != test.expected{
+// 			t.Errorf("Expected result: %s, but got: %s", test.expected, err.Error())
+// 		}
+// 	}
+// }
