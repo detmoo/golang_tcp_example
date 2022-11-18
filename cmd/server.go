@@ -28,16 +28,23 @@ func NewRootCmd() *cobra.Command {
                 return err
             }
             // defer close listener
+            closureChannel := make(chan error)
             ctx := context.Background()
-            go pkg.DeferCloseListener(listener, timeout, ctx)
+            go pkg.DeferCloseListener(listener, timeout, closureChannel, ctx)
 
             // await connections
             for {
                 conn, err := listener.Accept()
                 if err != nil {
-                    log.Fatal(err)
-                    fmt.Println(err)
-                    return err
+                    select {
+                    case <-closureChannel:
+                        log.Printf("Listener closure was received.\n")
+                        return nil
+                    default:
+                        log.Fatal(err)
+                        fmt.Println(err)
+                        return err
+                    }
                 }
                 go pkg.HandleIncomingRequest(conn)
             }
