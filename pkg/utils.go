@@ -27,7 +27,7 @@ func (m *ServerClosedError) Error() string {
 
 func DeferCloseListener(listener net.Listener, timeout time.Duration, closureChannel chan<- error, parent context.Context) error {
 
-    func closeListenerE(reason string) error {
+    closer := func closeListenerE(reason string) error {
         defer listener.Close()
         err := ServerClosedError{
             Reason: reason,
@@ -43,10 +43,10 @@ func DeferCloseListener(listener net.Listener, timeout time.Duration, closureCha
 	select {
 	case <-time.After(timeout):
         log.Println("listener time expired")
-		return closeListenerE("timeout")
+		return closer("timeout")
 	case <-ctx.Done():
 	    log.Println("cancel, interrupt or termination signal received")
 		stop()
-		return closeListenerE("interrupted")
+		return closer("interrupted")
 	}
 }
