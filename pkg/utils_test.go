@@ -25,14 +25,14 @@ var utilsTests = map[string]utilsTestCase{
         listenerTimeout: (4 * time.Second),
         host: "localhost",
         port: "9002",
-        expected: "timeout",
+        expected: "reason timeout: err the listener was forcibly closed",
     },
     "expect signal": utilsTestCase{
         testTimeout: (4 * time.Second), // less than the listener timeout
         listenerTimeout: (12 * time.Second),
         host: "localhost",
         port: "9003",
-        expected: "interrupted",
+        expected: "reason interrupted: err the listener was forcibly closed",
     },
 }
 
@@ -49,9 +49,9 @@ func TestDeferUserInterrupt(t *testing.T) {
         closureChannel := make(chan error)
 		ctx := context.Background()
 		ctx, _ = context.WithTimeout(ctx, test.testTimeout)
-		clsErr := DeferCloseListener(listener, test.listenerTimeout, closureChannel, ctx)
-	    if clsErr.Reason != test.expected{
-			t.Errorf("Expected result: %s, but got: %s", test.expected, err.Reason)
+		err = DeferCloseListener(listener, test.listenerTimeout, closureChannel, ctx)
+	    if err != test.expected{
+			t.Errorf("Expected result: %s, but got: %s", test.expected, err)
 		}
 	}
 }

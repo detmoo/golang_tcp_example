@@ -26,7 +26,7 @@ func (m *ServerClosedError) Error() string {
 
 func DeferCloseListener(listener net.Listener, timeout time.Duration, closureChannel chan<- error, parent context.Context) error {
 
-    closer := func(reason string) ServerClosedError {
+    closer := func(reason string) error {
         defer listener.Close()
         err := &ServerClosedError{
             Reason: reason,
