@@ -16,12 +16,12 @@ import (
 
 type ServerClosedError struct{
     Reason string
-    Err error
+    Msg string
 }
 
 
 func (m *ServerClosedError) Error() string {
-	return fmt.Sprintf("reason %d: err %v", m.Reason, m.Err)
+	return fmt.Sprintf("reason %d: err %v", m.Reason, m.Msg)
 }
 
 
@@ -31,7 +31,7 @@ func DeferCloseListener(listener net.Listener, timeout time.Duration, closureCha
         defer listener.Close()
         err := &ServerClosedError{
             Reason: reason,
-            Err: errors.New("the listener was forcibly closed"),
+            Msg: "the listener was forcibly closed",
         }
         closureChannel <- err
         return err
