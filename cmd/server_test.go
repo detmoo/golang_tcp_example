@@ -34,5 +34,5 @@ func TestEchoServer(t *testing.T) {
 		t.Fatal(err)
 	}
 	fmt.Fprintf(conn, REQUEST_CONTENT+"\n")
-	fmt.Println("This is the out string:", out)
+	//fmt.Println("This is the out string:", out)
 }
