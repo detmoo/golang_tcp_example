@@ -14,24 +14,48 @@ var HOST string = "localhost"
 var PORT string = "9001"
 var REQUEST_CONTENT = "nature is great!"
 
+
+type serverTestCase struct {
+        host string
+        port string
+        request string
+        answer string
+}
+
+var serverTests = map[string]serverTestCase{
+    "sends message and expects return": serverTestCase{
+        host: "localhost",
+        port: "9002",
+        send: "mambo is great!",
+        expected: "on2",)
+    },
+}
+
 func TestEchoServer(t *testing.T) {
-	rootCmd := NewRootCmd()
-	b := bytes.NewBufferString("")
-	rootCmd.SetOut(b)
-	rootCmd.SetArgs([]string{"--host", HOST, "--port", PORT})
-	go rootCmd.Execute()
-// 	out, err := io.ReadAll(b)
-// 	if err != nil {
-// 	    fmt.Println("Read Buffer Error:", err)
-// 		t.Fatal(err)
-// 	}
-	time.Sleep(3 * time.Second)  // to ensure the listener to ready to receive client connections
-	log.Println("server_test: dialling...")
-	conn, err := net.Dial("tcp", HOST+":"+PORT)
-	if err != nil {
-	    fmt.Println("Dial Error:", err)
-		t.Fatal(err)
-	}
-	fmt.Fprintf(conn, REQUEST_CONTENT+"\n")
-	//fmt.Println("This is the out string:", out)
+    for testName, test := range serverTests {
+    	rootCmd := NewRootCmd()
+        b := bytes.NewBufferString("")
+        rootCmd.SetOut(b)
+        rootCmd.SetArgs([]string{"--host", HOST, "--port", PORT})
+        go rootCmd.Execute()
+
+        time.Sleep(3 * time.Second)  // to ensure the listener to ready to receive client connections
+        log.Println("listener goroutine started. client dialling...")
+        conn, err := net.Dial("tcp", HOST+":"+PORT)
+        if err != nil {
+            t.Error("client could not dial server:", err)
+        }
+
+        request := new(pkg.Message)
+        request.Content = test.send
+        request.Metadata = MetadataSchema{
+            Timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
+            Tag: testName,
+            }
+        result, err := pkg.MakeRequest(request, conn)
+
+        if result.Content != test.expected{
+			t.Errorf("Expected result: %s, but got: %s", test.expected, result.Content)
+		}
+    }
 }

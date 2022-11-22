@@ -38,7 +38,8 @@ func (t *Message) parse(data []byte) {
 
 
 func HandleIncomingRequest(conn net.Conn) error {
-    // store incoming data
+    // receive
+    defer conn.Close()
     buffer := make([]byte, 1024)
     _, err := conn.Read(buffer)
     if err != nil {
@@ -47,13 +48,26 @@ func HandleIncomingRequest(conn net.Conn) error {
     }
     receivedMsg := new(Message)
     receivedMsg.parse(buffer)
+
     // respond
     response := getResponse(receivedMsg)
-    response.write(conn)
+    err = response.write(conn)
+    if err != nil {
+        log.Fatal(err)
+        return err
+    }
 
-    // close conn
-    conn.Close()
     return nil
+}
+
+
+func MakeRequest(msg Message, conn net.Conn) (answer Message, err error) {
+    output := make([]byte, 1024)
+    if _, err = conn.Read(output); err != nil {
+        log.Fatal(err)
+    }
+    answer.parse(output)
+    return
 }
 
 
@@ -62,7 +76,7 @@ func getResponse(input *Message) Message {
     msg.Content = input.Content
     msg.Metadata = MetadataSchema{
         Timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
-        Tag: "mambo",
+        Tag: "on2",
         }
     return *msg
 }
