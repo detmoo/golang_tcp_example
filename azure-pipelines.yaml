@@ -47,9 +47,9 @@ parameters:
   - name: azureDockerStageDependsOn
     type: object
     default: ['Build']
-  - name: versionStageDependsOn
-    type: object
-    default: ['AzureDockerStage']
+  # - name: versionStageDependsOn
+  #   type: object
+  #   default: ['AzureDockerStage']
   - name: dockerhubServiceConnection
     default: "bd-docker-hub-svc-connection"
   - name: dockerhubRepository  # this defaults to the same value as parameters.appName
