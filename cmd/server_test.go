@@ -10,7 +10,7 @@ import (
 )
 
 
-var HOST string = "127.0.0.1"
+var HOST string = "localhost"
 var PORT string = "9001"
 var REQUEST_CONTENT = "nature is great!"
 

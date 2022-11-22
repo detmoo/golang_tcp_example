@@ -39,7 +39,7 @@ func NewRootCmd() *cobra.Command {
                     select {
                     case <-closureChannel:
                         close(closureChannel)
-                        log.Printf("Listener closure was received.\n")
+                        log.Printf("listener closure handled\n")
                         return err
                     default:
                         close(closureChannel)
@@ -59,6 +59,7 @@ func NewRootCmd() *cobra.Command {
 
 func Execute() {
 	rootCmd := NewRootCmd()
+    log.Println("cmd.Execute(): rootCmd assigned")
 	if err := rootCmd.Execute(); err != nil {
 	os.Exit(1)
 	}
