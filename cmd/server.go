@@ -39,7 +39,6 @@ func NewRootCmd() *cobra.Command {
                     select {
                     case <-closureChannel:
                         close(closureChannel)
-                        log.Printf("listener closure handled\n")
                         return err
                     default:
                         close(closureChannel)

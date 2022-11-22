@@ -26,6 +26,7 @@ func TestEchoServer(t *testing.T) {
 		t.Fatal(err)
 	}
 	time.Sleep(5 * time.Second)  // to ensure the listener to ready to receive client connections
+	log.Println("server_test: dialling...")
 	conn, err := net.Dial("tcp", HOST+":"+PORT)
 	if err != nil {
 	    fmt.Println("Dial Error:", err)
