@@ -39,6 +39,39 @@ parameters:
     default: $(Build.SourcesDirectory)
   - name: goModuleName
     default: bowdata.test.go_module_template
+## Azure Docker Stage Parameter Set
+  - name: azureDockerStageCondition
+    default: eq('1', '0')
+  - name: azureDockerStageName
+    default: AzureDockerStage
+  - name: azureDockerStageDependsOn
+    type: object
+    default: ['Build']
+  - name: versionStageDependsOn
+    type: object
+    default: ['AzureDockerStage']
+  - name: dockerhubServiceConnection
+    default: "bd-docker-hub-svc-connection"
+  - name: dockerhubRepository  # this defaults to the same value as parameters.appName
+    default: $(Build.Repository.Name)
+  - name: dockerhubAccount
+    default: "bowdatadockerhub"
+  - name: containerPort
+    default: 5000
+  - name: hostPort
+    default: 8000
+  - name: _azure_docker_stage_params
+    type: object
+    default:
+      - azureDockerStageName
+      - azureDockerStageCondition
+      - azureDockerStageDependsOn
+      - dockerhubServiceConnection
+      - containerPort
+      - hostPort
+      - containerRuntimeVariables
+      - dockerhubAccount
+      - dockerhubRepository
 ## Version Stage Parameter Set
   - name: _version_stage_params
     type: object
