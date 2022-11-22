@@ -32,6 +32,7 @@ func DeferCloseListener(listener net.Listener, timeout time.Duration, closureCha
             Reason: reason,
             Msg: "the listener was forcibly closed",
         }
+        log.Println("closer() func ln 35 here")
         closureChannel <- err
         return err
     }
@@ -42,6 +43,7 @@ func DeferCloseListener(listener net.Listener, timeout time.Duration, closureCha
 	select {
 	case <-time.After(timeout):
         log.Println("listener time expired")
+        log.Println("DeferClose func ln 46 here")
 		return closer("timeout")
 	case <-ctx.Done():
 	    log.Println("cancel, interrupt or termination signal received")

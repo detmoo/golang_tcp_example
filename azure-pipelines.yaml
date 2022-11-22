@@ -39,10 +39,6 @@ parameters:
     default: $(Build.SourcesDirectory)
   - name: goModuleName
     default: bowdata.test.go_module_template
-## Integration Test Stage Parameter Set
-  - name: integrationTestStages
-    type: stageList
-    default: []
 ## Version Stage Parameter Set
   - name: _version_stage_params
     type: object
@@ -73,6 +69,7 @@ parameters:
     default: false
 
 
+
 stages:
   - template: /pipelines/module-pipeline.yaml@bowdata-go-pipelines
     parameters:
@@ -80,7 +77,23 @@ stages:
       buildStageName: ${{parameters.buildStageName}}
       workingDirectory: ${{parameters.WorkingDirectory}}
 
-  - ${{ parameters.integrationTestStages }}
+  - template: /containers/stages/azure-docker-stage.yaml@bowdata-toolkits
+    parameters:
+      ${{ each pair in parameters }}:
+        ${{if and(or(containsValue(parameters._azure_docker_stage_params, pair.key), containsValue(parameters._general_params, pair.key)), not(containsValue(parameters._ignore_params, pair.key)))}}:
+          ${{pair.key}}: ${{pair.value}}
+      dockerRunPostSteps:
+
+        - script: |
+            status_code=$(curl --write-out %{http_code} --silent --output /dev/null http://localhost:${{parameters.hostPort}}/)
+            if [[ "$status_code" -ne 200 ]] ; then
+              echo "Received status $status_code" Expected 200; exit 1
+            else
+              exit 0
+            fi
+          displayName: "Smoke Test: WebApp"
+          name: SmokeTest_App
+          workingDirectory: ${{parameters.workingDirectory}}
 
   - template: /python/stages/version-stage.yaml@bowdata-toolkits
     parameters:

@@ -47,11 +47,12 @@ func TestDeferUserInterrupt(t *testing.T) {
             fmt.Println(err)
         }
 
-        closureChannel := make(chan error)
+        closureChannel := make(chan error, 1)
         ctx := context.Background()
-// 		ctx, cancelCtx := context.WithTimeout(context.Background(), test.testTimeout)
-// 		defer cancelCtx()
-		err = DeferCloseListener(listener, test.listenerTimeout, closureChannel, ctx)
+		ctx, cancelCtx := context.WithTimeout(context.Background(), test.testTimeout)
+		defer cancelCtx()
+		go DeferCloseListener(listener, test.listenerTimeout, closureChannel, ctx)
+        err = <-closureChannel
 	    if err.Error() != test.expected{
 			t.Errorf("Expected result: %s, but got: %s", test.expected, err.Error())
 		}

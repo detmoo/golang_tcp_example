@@ -28,7 +28,7 @@ func NewRootCmd() *cobra.Command {
                 return err
             }
             // defer close listener
-            closureChannel := make(chan error)
+            closureChannel := make(chan error, 1)
             ctx := context.Background()
             go pkg.DeferCloseListener(listener, timeout, closureChannel, ctx)
 
@@ -38,9 +38,11 @@ func NewRootCmd() *cobra.Command {
                 if err != nil {
                     select {
                     case <-closureChannel:
+                        close(closureChannel)
                         log.Printf("Listener closure was received.\n")
-                        return nil
+                        return err
                     default:
+                        close(closureChannel)
                         log.Fatal(err)
                         fmt.Println(err)
                         return err
