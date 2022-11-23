@@ -48,13 +48,13 @@ func HandleIncomingRequest(conn net.Conn) error {
     // receive
     defer conn.Close()
     buffer := make([]byte, 1024)
-    _, err := conn.Read(buffer)
+    len, err := conn.Read(buffer)
     if err != nil {
         log.Fatal(err)
         return err
     }
     receivedMsg := new(Message)
-    receivedMsg.parse(buffer)
+    receivedMsg.parse(buffer[:len])
     log.Println("this is the received.Content:", receivedMsg.Content)
     log.Println("this is the received.Metadata:", receivedMsg.Metadata)
 
@@ -80,12 +80,12 @@ func MakeRequest(msg Message, conn net.Conn) (answer Message, err error) {
 
     // receive
     output := make([]byte, 1024)
-    if _, err = conn.Read(output); err != nil {
+    if len, err := conn.Read(output); err != nil {
         log.Fatal(err)
     }
 
     log.Println("this is the raw output:", string(output))
-    answer.parse(output)
+    answer.parse(output[:len])
     return
 }
 
