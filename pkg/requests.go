@@ -62,10 +62,17 @@ func HandleIncomingRequest(conn net.Conn) error {
 
 
 func MakeRequest(msg Message, conn net.Conn) (answer Message, err error) {
+    // send
+    if err = msg.write(conn); err != nil {
+        log.Fatal(err)
+    }
+
+    // receive
     output := make([]byte, 1024)
     if _, err = conn.Read(output); err != nil {
         log.Fatal(err)
     }
+
     answer.parse(output)
     return
 }
