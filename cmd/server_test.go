@@ -18,8 +18,8 @@ var REQUEST_CONTENT = "nature is great!"
 type serverTestCase struct {
         host string
         port string
-        request string
-        answer string
+        send string
+        expected string
 }
 
 var serverTests = map[string]serverTestCase{
