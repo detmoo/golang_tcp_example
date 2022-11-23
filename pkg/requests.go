@@ -39,7 +39,7 @@ func (t *Message) parse(data []byte) {
 
 func HandleIncomingRequest(conn net.Conn) error {
     // receive
-    defer conn.Close()
+    // defer conn.Close()
     buffer := make([]byte, 1024)
     _, err := conn.Read(buffer)
     if err != nil {
@@ -57,7 +57,7 @@ func HandleIncomingRequest(conn net.Conn) error {
         return err
     }
 
-    // conn.Close()
+    conn.Close()
     return nil
 }
 

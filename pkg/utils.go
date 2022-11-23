@@ -49,3 +49,23 @@ func DeferCloseListener(listener net.Listener, timeout time.Duration, closureCha
 		return closer("interrupted")
 	}
 }
+
+
+// func QueueConnections(listener net.Listener, queue chan<- net.Conn) {
+//     for {
+//         conn, err := listener.Accept()
+//         if err != nil {
+//             select {
+//             case <-closureChannel:
+//                 close(closureChannel)
+//                 return err
+//             default:
+//                 close(closureChannel)
+//                 log.Fatal(err)
+//                 fmt.Println(err)
+//                 return err
+//             }
+//         }
+//         go pkg.HandleIncomingRequest(conn)
+//     }
+// }
