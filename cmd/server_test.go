@@ -28,7 +28,7 @@ var serverTests = map[string]serverTestCase{
         host: "localhost",
         port: "9001",
         send: "mambo is great!",
-        expected: "on2",
+        expected: "TCP listener received Message.Content: mambo is great!",
     },
 }
 
@@ -40,7 +40,7 @@ func TestEchoServer(t *testing.T) {
         rootCmd.SetArgs([]string{"--host", HOST, "--port", PORT})
         go rootCmd.Execute()
 
-        time.Sleep(3 * time.Second)  // to ensure the listener to ready to receive client connections
+        time.Sleep(2 * time.Second)  // to ensure the listener to ready to receive client connections
         log.Println("listener goroutine started. client dialling...")
         conn, err := net.Dial("tcp", HOST+":"+PORT)
         if err != nil {
@@ -53,8 +53,6 @@ func TestEchoServer(t *testing.T) {
             Timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05.0000 MST"),
             Tag: testName,
             }
-        log.Println("this is the request.Content:", request.Content)
-        log.Println("this is the request.Metadata:", request.Metadata)
         result, err := pkg.MakeRequest(*request, conn)
         if err != nil {
             t.Error("test client could not make request:", err)
