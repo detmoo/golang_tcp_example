@@ -92,7 +92,7 @@ func getResponse(input *Message) Message {
     msg := new(Message)
     msg.Content = "TCP listener received Message.Content: "+input.Content
     msg.Metadata = MetadataSchema{
-        Timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
+        Timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05.123 MST"),
         Tag: "TCPServer",
         }
     return *msg
