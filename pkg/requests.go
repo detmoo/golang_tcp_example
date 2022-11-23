@@ -80,7 +80,8 @@ func MakeRequest(msg Message, conn net.Conn) (answer Message, err error) {
 
     // receive
     output := make([]byte, 1024)
-    if size, err := conn.Read(output); err != nil {
+    size, err := conn.Read(output)
+    if err != nil {
         log.Fatal(err)
     }
 
