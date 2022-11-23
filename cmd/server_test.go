@@ -26,7 +26,7 @@ type serverTestCase struct {
 var serverTests = map[string]serverTestCase{
     "sends message and expects return": serverTestCase{
         host: "localhost",
-        port: "9002",
+        port: "9001",
         send: "mambo is great!",
         expected: "on2",
     },

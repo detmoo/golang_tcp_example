@@ -57,6 +57,7 @@ func HandleIncomingRequest(conn net.Conn) error {
         return err
     }
 
+    // conn.Close()
     return nil
 }
 
@@ -76,7 +77,7 @@ func getResponse(input *Message) Message {
     msg.Content = input.Content
     msg.Metadata = MetadataSchema{
         Timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
-        Tag: "server says: on2",
+        Tag: "server boo!",
         }
     return *msg
 }
