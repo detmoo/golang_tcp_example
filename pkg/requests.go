@@ -48,9 +48,13 @@ func HandleIncomingRequest(conn net.Conn) error {
     }
     receivedMsg := new(Message)
     receivedMsg.parse(buffer)
+    log.Println("this is the received.Content:", response.Content)
+    log.Println("this is the received.Metadata:", response.Metadata)
 
     // respond
     response := getResponse(receivedMsg)
+    log.Println("this is the response.Content:", response.Content)
+    log.Println("this is the response.Metadata:", response.Metadata)
     err = response.write(conn)
     if err != nil {
         log.Fatal(err)
