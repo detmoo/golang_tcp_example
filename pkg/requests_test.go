@@ -28,10 +28,11 @@ func TestParse(t *testing.T) {
 	for testName, test := range requestsTests {
 		t.Logf("Running test case %s", testName)
 		expectation := Message(test)
+		t.Logf("Running test with expectation result: %s", testName)
 		jsonStr, _ := json.Marshal(expectation)
 		msg := new(Message)
 		msg.parse(jsonStr)
-		if *msg != expectation{
+		if *msg == expectation{
 			t.Errorf("Expected result: %s, but got: %s", expectation, msg)
 		}
 	}
