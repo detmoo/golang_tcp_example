@@ -76,7 +76,7 @@ func getResponse(input *Message) Message {
     msg.Content = input.Content
     msg.Metadata = MetadataSchema{
         Timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
-        Tag: "on2",
+        Tag: "server says: on2",
         }
     return *msg
 }
