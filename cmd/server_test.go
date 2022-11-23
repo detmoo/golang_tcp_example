@@ -50,7 +50,7 @@ func TestEchoServer(t *testing.T) {
 
         request := new(pkg.Message)
         request.Content = test.send
-        request.Metadata = MetadataSchema{
+        request.Metadata = pkg.MetadataSchema{
             Timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
             Tag: testName,
             }
