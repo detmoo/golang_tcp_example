@@ -23,7 +23,7 @@ type Message struct {
 
 func (t Message) write(conn net.Conn) error {
     jsonStr, _ := json.Marshal(t)
-    log.Println("writing this jsonStr", jsonStr)
+    log.Println("writing this jsonStr", string(jsonStr))
 
     _, err := conn.Write([]byte(jsonStr))
         if err != nil {
@@ -36,7 +36,9 @@ func (t Message) write(conn net.Conn) error {
 
 func (t *Message) parse(data []byte) {
     log.Println("parsing this data", string(data))
+    log.Println("this is the value.Content before parse", string(t.Content))
     json.Unmarshal(data, t)
+    log.Println("this is the value.Content after parse", string(t.Content))
 }
 
 
@@ -80,6 +82,7 @@ func MakeRequest(msg Message, conn net.Conn) (answer Message, err error) {
         log.Fatal(err)
     }
 
+    log.Println("this is the raw output:", string(output))
     answer.parse(output)
     return
 }
