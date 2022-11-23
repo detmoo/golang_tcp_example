@@ -23,6 +23,8 @@ type Message struct {
 
 func (t Message) write(conn net.Conn) error {
     jsonStr, _ := json.Marshal(t)
+    log.Println("writing this jsonStr", jsonStr)
+
     _, err := conn.Write([]byte(jsonStr))
         if err != nil {
             log.Fatal(err)
@@ -33,6 +35,7 @@ func (t Message) write(conn net.Conn) error {
 
 
 func (t *Message) parse(data []byte) {
+    log.Println("parsing this data", string(data))
     json.Unmarshal(data, t)
 }
 
@@ -84,10 +87,10 @@ func MakeRequest(msg Message, conn net.Conn) (answer Message, err error) {
 
 func getResponse(input *Message) Message {
     msg := new(Message)
-    msg.Content = input.Content
+    msg.Content = "TCP listener received Message.Content: "+input.Content
     msg.Metadata = MetadataSchema{
         Timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
-        Tag: "server boo!",
+        Tag: "TCPServer",
         }
     return *msg
 }

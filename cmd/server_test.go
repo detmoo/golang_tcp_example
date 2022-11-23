@@ -53,7 +53,8 @@ func TestEchoServer(t *testing.T) {
             Timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
             Tag: testName,
             }
-
+        log.Println("this is the request.Content:", request.Content)
+        log.Println("this is the request.Metadata:", request.Metadata)
         result, err := pkg.MakeRequest(*request, conn)
         if err != nil {
             t.Error("test client could not make request:", err)
