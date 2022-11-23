@@ -27,7 +27,7 @@ func NewRootCmd() *cobra.Command {
                 return err
             }
             // defer close listener
-            timeout := time.ParseDuration(duration)
+            timeout, _ := time.ParseDuration(duration)
             closureChannel := make(chan error, 1)
             ctx := context.Background()
             go pkg.DeferCloseListener(listener, timeout, closureChannel, ctx)
