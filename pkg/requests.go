@@ -37,7 +37,9 @@ func (t Message) write(conn net.Conn) error {
 func (t *Message) parse(data []byte) {
     log.Println("parsing this data", string(data))
     log.Println("this is the value.Content before parse", string(t.Content))
-    json.Unmarshal(data, t)
+    if err := json.Unmarshal(data, t); err != nil {
+        log.Fatal("error on json unmarshall of byte slice")
+    }
     log.Println("this is the value.Content after parse", string(t.Content))
 }
 
@@ -92,7 +94,7 @@ func getResponse(input *Message) Message {
     msg := new(Message)
     msg.Content = "TCP listener received Message.Content: "+input.Content
     msg.Metadata = MetadataSchema{
-        Timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05.123 MST"),
+        Timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05.0000 MST"),
         Tag: "TCPServer",
         }
     return *msg

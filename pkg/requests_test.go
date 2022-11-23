@@ -32,8 +32,8 @@ func TestParse(t *testing.T) {
 		jsonStr, _ := json.Marshal(expectation)
 		msg := new(Message)
 		msg.parse(jsonStr)
-		if *msg == expectation{
-			t.Errorf("Expected result: %s, but got: %s", expectation, msg)
+		if *msg != expectation{
+			t.Errorf("Expected result: %s, but got: %s", expectation, *msg)
 		}
 	}
 }
@@ -44,8 +44,8 @@ func TestGetResponse(t *testing.T) {
 		t.Logf("Running test case %s", testName)
 		input := Message(test)
 		res := getResponse(&input)
-		if res.Content != input.Content{
-			t.Errorf("Expected content: %s, but got: %s", input.Content, res.Content)
+		if res.Content != "TCP listener received Message.Content: "+input.Content{
+			t.Errorf("Expected content: %s, but got: %s", "TCP listener received Message.Content: "+input.Content, res.Content)
 		}
 	    if res.Metadata.Tag != "server boo!" {
 			t.Errorf("Expected metadata tag: %s, but got: %s", "server boo!", res.Metadata.Tag)
