@@ -11,6 +11,7 @@ import (
 type requestsTestCase struct {
         Content string
         Metadata MetadataSchema
+        expectedTag string
 }
 
 var requestsTests = map[string]requestsTestCase{
@@ -20,6 +21,7 @@ var requestsTests = map[string]requestsTestCase{
             Timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
             Tag: "salsa",
             },
+        expectedTag: "mambo",
     },
 }
 
@@ -46,8 +48,8 @@ func TestGetResponse(t *testing.T) {
 		if res.Content != input.Content{
 			t.Errorf("Expected content: %s, but got: %s", input.Content, res.Content)
 		}
-	    if res.Metadata.Tag != "mambo" {
-			t.Errorf("Expected metadata tag: %s, but got: %s", "mambo", res.Metadata.Tag)
+	    if res.Metadata.Tag != test.expectedTag {
+			t.Errorf("Expected metadata tag: %s, but got: %s", test.expectedTag, res.Metadata.Tag)
 		}
 	}
 }
