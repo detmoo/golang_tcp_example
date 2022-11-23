@@ -48,8 +48,8 @@ func HandleIncomingRequest(conn net.Conn) error {
     }
     receivedMsg := new(Message)
     receivedMsg.parse(buffer)
-    log.Println("this is the received.Content:", response.Content)
-    log.Println("this is the received.Metadata:", response.Metadata)
+    log.Println("this is the received.Content:", receivedMsg.Content)
+    log.Println("this is the received.Metadata:", receivedMsg.Metadata)
 
     // respond
     response := getResponse(receivedMsg)
