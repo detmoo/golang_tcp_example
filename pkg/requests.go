@@ -38,7 +38,7 @@ func (t *Message) parse(data []byte) {
     log.Println("parsing this data", string(data))
     log.Println("this is the value.Content before parse", string(t.Content))
     if err := json.Unmarshal(data, t); err != nil {
-        log.Fatal("error on json unmarshall of byte slice")
+        log.Fatal("error on json unmarshall of byte slice:", err)
     }
     log.Println("this is the value.Content after parse", string(t.Content))
 }

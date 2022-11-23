@@ -47,7 +47,7 @@ func TestGetResponse(t *testing.T) {
 		if res.Content != "TCP listener received Message.Content: "+input.Content{
 			t.Errorf("Expected content: %s, but got: %s", "TCP listener received Message.Content: "+input.Content, res.Content)
 		}
-	    if res.Metadata.Tag != "server boo!" {
+	    if res.Metadata.Tag != "TCPServer" {
 			t.Errorf("Expected metadata tag: %s, but got: %s", "server boo!", res.Metadata.Tag)
 		}
 	}
