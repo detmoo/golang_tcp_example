@@ -27,7 +27,7 @@ var serverTests = map[string]serverTestCase{
         host: "localhost",
         port: "9002",
         send: "mambo is great!",
-        expected: "on2",)
+        expected: "on2",
     },
 }
 
