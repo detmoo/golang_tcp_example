@@ -54,7 +54,7 @@ func TestEchoServer(t *testing.T) {
             Timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
             Tag: testName,
             }
-        result, err := pkg.MakeRequest(&request, conn)
+        result, err := pkg.MakeRequest(*request, conn)
 
         if result.Content != test.expected{
 			t.Errorf("Expected result: %s, but got: %s", test.expected, result.Content)
