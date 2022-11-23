@@ -54,6 +54,9 @@ func TestEchoServer(t *testing.T) {
             Tag: testName,
             }
         result, err := pkg.MakeRequest(*request, conn)
+        if err != nil {
+            t.Error("test client could not formulate request:", err)
+        }
 
         if result.Content != test.expected{
 			t.Errorf("Expected result: %s, but got: %s", test.expected, result.Content)
