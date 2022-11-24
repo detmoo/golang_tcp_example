@@ -13,14 +13,16 @@ import (
 	"bowdata.test.go_tcp_echo/pkg"
 )
 
-var duration, host, port string
+var duration, host, port, message string
 
 
-func runServerCmd() *cobra.Command {
+func runClientCmd() *cobra.Command {
 	cmd:= &cobra.Command{
 		Use: "server",
-		Short: "serves a TCP listener that sends a response to client connections",
+		Short: "serves a TCP listener that parses requests via the pkg.Message interface which is implemented herein",
+		Args: cobra.ExactArgs(1)
 		RunE: func(cmd *cobra.Command, args []string) error {
+		    message = args[0]
 			listener, err := net.Listen("tcp", host+":"+port)
             if err != nil {
                 log.Fatal(err)

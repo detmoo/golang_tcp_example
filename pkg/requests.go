@@ -5,8 +5,13 @@ import (
     "encoding/json"
     "log"
 	"net"
+	"os"
 	"time"
 )
+
+
+var SERVER_MSG_TAG_ENV_VAR string = "BD_SERVER_TAG"
+var CLIENT_MSG_TAG_ENV_VAR string = "BD_CLIENT_TAG"
 
 
 type MetadataSchema struct {
@@ -39,6 +44,15 @@ func (t *Message) parse(data []byte) {
 }
 
 
+func (t *Message) compose(content, tag string) Message {
+    t.Content = content
+    t.Metadata = MetadataSchema{
+        Timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05.0000 MST"),
+        Tag: tag,
+        }
+}
+
+
 func HandleIncomingRequest(conn net.Conn) error {
     // receive
     defer conn.Close()
@@ -52,7 +66,7 @@ func HandleIncomingRequest(conn net.Conn) error {
     receivedMsg.parse(buffer[:size])
 
     // respond
-    response := getResponse(receivedMsg)
+    response := getResponse(receivedMsg.Content)
     err = response.write(conn)
     if err != nil {
         log.Fatal(err)
@@ -63,7 +77,10 @@ func HandleIncomingRequest(conn net.Conn) error {
 }
 
 
-func MakeRequest(msg Message, conn net.Conn) (answer Message, err error) {
+func MakeRequest(content string, conn net.Conn) (answer Message, err error) {
+    // prepare message
+    msg := composeMessage(content, getMsgTagFromEnv(CLIENT_MSG_TAG_ENV_VAR))
+
     // send
     if err = msg.write(conn); err != nil {
         log.Fatal(err)
@@ -76,17 +93,23 @@ func MakeRequest(msg Message, conn net.Conn) (answer Message, err error) {
         log.Fatal(err)
     }
 
+    // load response
     answer.parse(output[:size])
     return
 }
 
 
-func getResponse(input *Message) Message {
+func getResponse(requestContent string) Message {
     msg := new(Message)
-    msg.Content = "TCP listener received Message.Content: "+input.Content
-    msg.Metadata = MetadataSchema{
-        Timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05.0000 MST"),
-        Tag: "TCPServer",
-        }
+    msg.compose("TCP listener received: "+requestContent, getMsgTagFromEnv(SERVER_MSG_TAG_ENV_VAR))
     return *msg
+}
+
+
+func getMsgTagFromEnv(key string) string {
+    msgTag := os.Getenv(key)
+    if len(msgTag) == 0 {
+        msgTag = "untagged-tcp-endpoint"
+    }
+    return msgTag
 }

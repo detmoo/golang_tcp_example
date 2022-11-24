@@ -2,6 +2,7 @@
 
 FROM golang:1.18-alpine
 ARG APP_NAME
+ARG ARTIFACT_PATH=dist
 ARG USER_NAME=$APP_NAME
 ARG CONTAINER_PORT
 
@@ -12,14 +13,16 @@ WORKDIR /home/$USER_NAME
 COPY go.mod go.sum ./
 RUN go mod download
 
+COPY boot.sh ./
+RUN chmod +x boot.sh
+
 COPY *.go ./
-RUN go build -o /$APP_NAME
+RUN mkdir -p $ARTIFACT_PATH
+RUN go build -o ./$ARTIFACT_PATH/$APP_NAME
 
 RUN chown -R $USER_NAME:$USER_NAME ./
 USER $USER_NAME
 
 EXPOSE $CONTAINER_PORT
 
-COPY boot.sh ./
-RUN chmod +x boot.sh
-ENTRYPOINT ["./boot.sh"]
+ENTRYPOINT ./$ARTIFACT_PATH/$APP_NAME

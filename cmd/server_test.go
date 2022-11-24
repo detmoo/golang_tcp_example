@@ -13,7 +13,6 @@ import (
 
 var HOST string = "localhost"
 var PORT string = "9001"
-var REQUEST_CONTENT = "nature is great!"
 
 
 type serverTestCase struct {

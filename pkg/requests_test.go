@@ -9,17 +9,18 @@ import (
 
 
 type requestsTestCase struct {
-        Content string
-        Metadata MetadataSchema
+        requestContent string
+        requestTag string
+        expectedResponseContent string
+        expectedResponseTag string
 }
 
 var requestsTests = map[string]requestsTestCase{
     "affirmative test": requestsTestCase{
-        Content: "this is the request body",
-        Metadata: MetadataSchema{
-            Timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05 MST"),
-            Tag: "salsa",
-            },
+        requestContent: "this is the request body",
+        requestTag: "untagged-tcp-endpoint",
+        expectedResponseContent: "TCP listener received: this is the request body",
+        expectedResponseTag: "untagged-tcp-endpoint",
     },
 }
 
@@ -27,13 +28,13 @@ var requestsTests = map[string]requestsTestCase{
 func TestParse(t *testing.T) {
 	for testName, test := range requestsTests {
 		t.Logf("Running test case %s", testName)
-		expectation := Message(test)
-		t.Logf("Running test with expectation result: %s", expectation)
+		expectation := new(Message)
+		expectation.compose(test.expectedResponseContent, test.expectedResponseTag)
 		jsonStr, _ := json.Marshal(expectation)
-		msg := new(Message)
-		msg.parse(jsonStr)
-		if *msg != expectation{
-			t.Errorf("Expected result: %s, but got: %s", expectation, *msg)
+		result := new(Message)
+		result.parse(jsonStr)
+		if result != expectation{
+			t.Errorf("Expected result: %s, but got: %s", expectation, msg)
 		}
 	}
 }
@@ -42,12 +43,14 @@ func TestParse(t *testing.T) {
 func TestGetResponse(t *testing.T) {
 	for testName, test := range requestsTests {
 		t.Logf("Running test case %s", testName)
-		input := Message(test)
-		res := getResponse(&input)
-		if res.Content != "TCP listener received Message.Content: "+input.Content{
+	    input := new(Message)
+		input.compose(test.requestContent, test.requestTag)
+
+		res := getResponse(&input.Content)
+		if res.Content != "TCP listener received: "+requestContent{
 			t.Errorf("Expected content: %s, but got: %s", "TCP listener received Message.Content: "+input.Content, res.Content)
 		}
-	    if res.Metadata.Tag != "TCPServer" {
+	    if res.Metadata.Tag != "untagged-tcp-server" {
 			t.Errorf("Expected metadata tag: %s, but got: %s", "server boo!", res.Metadata.Tag)
 		}
 	}

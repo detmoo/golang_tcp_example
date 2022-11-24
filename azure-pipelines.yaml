@@ -41,7 +41,7 @@ parameters:
     default: bowdata.test.go_module_template
 ## Azure Docker Stage Parameter Set
   - name: azureDockerStageCondition
-    default: eq('1', '0')
+    default: succeeded()
   - name: azureDockerStageName
     default: AzureDockerStage
   - name: azureDockerStageDependsOn
@@ -60,6 +60,13 @@ parameters:
     default: 5000
   - name: hostPort
     default: 8000
+  - name: containerRuntimeVars
+    type: object
+    default: {}
+  - name: supplementaryRunFlags
+    default: ""
+  - name: dockerContainerCommandString
+    default: ""
   - name: _azure_docker_stage_params
     type: object
     default:
@@ -69,7 +76,9 @@ parameters:
       - dockerhubServiceConnection
       - containerPort
       - hostPort
-      - containerRuntimeVariables
+      - containerRuntimeVars
+      - supplementaryRunFlags
+      - dockerContainerCommandString
       - dockerhubAccount
       - dockerhubRepository
 ## Version Stage Parameter Set
