@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"net"
 	"os"
+	"strings"
 	"testing"
 	"time"
 
@@ -46,7 +47,13 @@ func TestEchoClient(t *testing.T) {
         time.Sleep(2 * time.Second)  // to ensure the listener to ready to receive client connections
         rootCmd.Execute()
 
-		t.Errorf("this is string of b: %s", string(b))
-
+        // read the stdout
+        out, err := io.ReadAll(b)
+        if err != nil {
+            t.Fatal(err)
+        }
+        if !strings.Contains(string(out), test.expected) {
+            t.Fatalf("expected \"%s\" got \"%s\"", test.expected, string(out))
+        }
     }
 }
