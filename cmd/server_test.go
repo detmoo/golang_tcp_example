@@ -38,7 +38,7 @@ func TestEchoServer(t *testing.T) {
 
         time.Sleep(2 * time.Second)  // to ensure the listener to ready to receive client connections
         log.Println("listener goroutine started. client dialling...")
-        conn, err := net.Dial("tcp", HOST+":"+PORT)
+        conn, err := net.Dial("tcp", test.host+":"+test.port)
         if err != nil {
             t.Error("TestEchoServer could not dial server:", err)
         }
