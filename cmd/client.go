@@ -13,7 +13,7 @@ import (
 	"bowdata.test.go_tcp_echo/pkg"
 )
 
-var duration, host, port, message string
+var message string
 
 
 func runClientCmd() *cobra.Command {
@@ -34,8 +34,6 @@ func runClientCmd() *cobra.Command {
 			return fmt.Fprintf(out, result)
 		},
 	}
-	cmd.Flags().StringVar(&host, "host", "localhost", "attempts TCP connection to this IP address")
-	cmd.Flags().StringVar(&port, "port", "9001", "attempts TCP connection to this host port")
 	return cmd
 }
 

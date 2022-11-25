@@ -47,12 +47,12 @@ func TestGetResponse(t *testing.T) {
 	    input := new(Message)
 		input.compose(test.requestContent, test.requestTag)
 
-		res := getResponse(&input.Content)
-		if res.Content != "TCP listener received: "+&input.Content {
+		res := getResponse(input.Content)
+		if res.Content != "TCP listener received: "+input.Content {
 			t.Errorf("Expected content: %s, but got: %s", "TCP listener received Message.Content: "+input.Content, res.Content)
 		}
 	    if res.Metadata.Tag != "untagged-tcp-server" {
-			t.Errorf("Expected metadata tag: %s, but got: %s", &input.Metadata.Tag, res.Metadata.Tag)
+			t.Errorf("Expected metadata tag: %s, but got: %s", input.Metadata.Tag, res.Metadata.Tag)
 		}
 	}
 }

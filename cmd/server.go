@@ -13,7 +13,7 @@ import (
 	"bowdata.test.go_tcp_echo/pkg"
 )
 
-var duration, host, port string
+var duration string
 
 
 func runServerCmd() *cobra.Command {
@@ -52,7 +52,5 @@ func runServerCmd() *cobra.Command {
 		},
 	}
 	cmd.Flags().StringVar(&duration, "duration", "10s", "time.ParseDuration compatible string")
-	cmd.Flags().StringVar(&host, "host", "localhost", "host IP address for the listener")
-	cmd.Flags().StringVar(&port, "port", "9001", "host port for the listener")
 	return cmd
 }
