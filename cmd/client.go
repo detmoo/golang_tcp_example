@@ -3,7 +3,6 @@ package cmd
 import (
     "encoding/json"
     "fmt"
-    "io"
 	"net"
 
 	"github.com/spf13/cobra"
@@ -14,7 +13,7 @@ import (
 var requestContent string
 
 
-func runClientCmd(out io.Writer) *cobra.Command {
+func runClientCmd() *cobra.Command {
 	cmd:= &cobra.Command{
 		Use: "client",
 		Short: "serves a TCP listener that parses requests via the pkg.Message interface which is implemented herein",
@@ -31,6 +30,9 @@ func runClientCmd(out io.Writer) *cobra.Command {
             }
             jsonStr, _ := json.Marshal(result)
 			fmt.Fprint(out, string(jsonStr))
+			return nil
+
+			fmt.Fprintf(cmd.OutOrStdout(), "%s", res)
 			return nil
 		},
 	}

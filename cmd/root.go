@@ -1,7 +1,6 @@
 package cmd
 
 import (
-    "io"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -10,7 +9,7 @@ import (
 var host, port string
 
 
-func newRootCmd(out io.Writer) *cobra.Command {
+func newRootCmd() *cobra.Command {
 	cmd:= &cobra.Command{
 		Use: "tcp-server-client",
 		Short: "Simple TCP Server/Client",
@@ -22,14 +21,14 @@ func newRootCmd(out io.Writer) *cobra.Command {
 
 	cmd.AddCommand(
 	    runServerCmd(),
-	    runClientCmd(out),
+	    runClientCmd(),
 	)
 	return cmd
 }
 
 
 func Execute() {
-	rootCmd := newRootCmd(os.Stdout)
+	rootCmd := newRootCmd()
 	if err := rootCmd.Execute(); err != nil {
 	os.Exit(1)
 	}
