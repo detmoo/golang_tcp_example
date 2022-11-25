@@ -67,6 +67,8 @@ parameters:
     default: ""
   - name: dockerContainerCommandString
     default: ""
+  - name: downloadArtifactCondition
+    default: succeeded()
   - name: _azure_docker_stage_params
     type: object
     default:
@@ -74,6 +76,7 @@ parameters:
       - azureDockerStageCondition
       - azureDockerStageDependsOn
       - dockerhubServiceConnection
+      - downloadArtifactCondition
       - containerPort
       - hostPort
       - containerRuntimeVars
