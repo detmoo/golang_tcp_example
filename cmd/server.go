@@ -5,7 +5,6 @@ import (
     "fmt"
 	"log"
 	"net"
-	"os"
     "time"
 
 	"github.com/spf13/cobra"

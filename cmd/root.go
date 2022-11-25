@@ -2,14 +2,9 @@ package cmd
 
 import (
     "io"
-	"log"
-	"net"
 	"os"
-    "time"
 
 	"github.com/spf13/cobra"
-
-	"bowdata.test.go_tcp_echo/pkg"
 )
 
 var host, port string
