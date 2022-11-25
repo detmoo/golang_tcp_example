@@ -16,7 +16,7 @@ var requestContent string
 
 func runClientCmd(out io.Writer) *cobra.Command {
 	cmd:= &cobra.Command{
-		Use: "server",
+		Use: "client",
 		Short: "serves a TCP listener that parses requests via the pkg.Message interface which is implemented herein",
 		Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
