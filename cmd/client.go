@@ -11,7 +11,7 @@ import (
 	"bowdata.test.go_tcp_echo/pkg"
 )
 
-var message string
+var requestContent string
 
 
 func runClientCmd(out io.Writer) *cobra.Command {
@@ -20,7 +20,7 @@ func runClientCmd(out io.Writer) *cobra.Command {
 		Short: "serves a TCP listener that parses requests via the pkg.Message interface which is implemented herein",
 		Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-		    requestContent := args[0]
+		    requestContent = args[0]
             conn, err := net.Dial("tcp", host+":"+port)
             if err != nil {
                 return err
@@ -30,7 +30,7 @@ func runClientCmd(out io.Writer) *cobra.Command {
                 return err
             }
             jsonStr, _ := json.Marshal(result)
-			fmt.Fprintf(out, string(jsonStr))
+			fmt.Fprint(out, string(jsonStr))
 			return nil
 		},
 	}
