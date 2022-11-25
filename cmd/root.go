@@ -17,9 +17,8 @@ func newRootCmd(out io.Writer) *cobra.Command {
 		Long: "Run TCP Server/Client via CLI e.g. for testing TCP connections",
 	}
 
-	cmd.PersistentFlags()
-	cmd.Flags().StringVar(&host, "host", "localhost", "attempts TCP connection via this IP address")
-	cmd.Flags().StringVar(&port, "port", "9001", "attempts TCP connection via this host port")
+	cmd.PersistentFlags().StringVar(&host, "host", "localhost", "attempts TCP connection via this IP address")
+	cmd.PersistentFlags().StringVar(&port, "port", "9001", "attempts TCP connection via this host port")
 
 	cmd.AddCommand(
 	    runServerCmd(),
