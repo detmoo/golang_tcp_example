@@ -15,6 +15,7 @@ type requestsTestCase struct {
         expectedResponseTag string
 }
 
+
 var requestsTests = map[string]requestsTestCase{
     "affirmative test": requestsTestCase{
         requestContent: "this is the request body",
@@ -47,11 +48,11 @@ func TestGetResponse(t *testing.T) {
 		input.compose(test.requestContent, test.requestTag)
 
 		res := getResponse(&input.Content)
-		if res.Content != "TCP listener received: "+requestContent{
+		if res.Content != "TCP listener received: "+&input.Content {
 			t.Errorf("Expected content: %s, but got: %s", "TCP listener received Message.Content: "+input.Content, res.Content)
 		}
 	    if res.Metadata.Tag != "untagged-tcp-server" {
-			t.Errorf("Expected metadata tag: %s, but got: %s", "server boo!", res.Metadata.Tag)
+			t.Errorf("Expected metadata tag: %s, but got: %s", &input.Metadata.Tag, res.Metadata.Tag)
 		}
 	}
 }

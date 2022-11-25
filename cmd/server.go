@@ -56,11 +56,3 @@ func runServerCmd() *cobra.Command {
 	cmd.Flags().StringVar(&port, "port", "9001", "host port for the listener")
 	return cmd
 }
-
-func Execute() {
-	rootCmd := NewRootCmd()
-    log.Println("cmd.Execute(): rootCmd assigned")
-	if err := rootCmd.Execute(); err != nil {
-	os.Exit(1)
-	}
-}

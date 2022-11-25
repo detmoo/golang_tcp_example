@@ -3,6 +3,7 @@ package cmd
 import (
     "context"
     "fmt"
+    "io/ioutil"
 	"log"
 	"net"
 	"os"
@@ -16,7 +17,7 @@ import (
 var duration, host, port string
 
 
-func newRootCmd() *cobra.Command {
+func newRootCmd(out io.Writer) *cobra.Command {
 	cmd:= &cobra.Command{
 		Use: "tcp-server-client",
 		Short: "Simple TCP Server/Client",
@@ -24,14 +25,14 @@ func newRootCmd() *cobra.Command {
 	}
 	cmd.AddCommand(
 	    runServerCmd(),
-	    runClientCmd(),
+	    runClientCmd(out),
 	)
 	return cmd
 }
 
 
 func Execute() {
-	rootCmd := newRootCmd()
+	rootCmd := newRootCmd(os.Stdout)
 	if err := rootCmd.Execute(); err != nil {
 	os.Exit(1)
 	}

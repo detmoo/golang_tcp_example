@@ -11,10 +11,6 @@ import (
 )
 
 
-var HOST string = "localhost"
-var PORT string = "9001"
-
-
 type serverTestCase struct {
         host string
         port string
@@ -27,7 +23,7 @@ var serverTests = map[string]serverTestCase{
         host: "localhost",
         port: "9001",
         send: "mambo is great!",
-        expected: "TCP listener received Message.Content: mambo is great!",
+        expected: "TCP listener received: mambo is great!",
     },
 }
 
@@ -36,29 +32,23 @@ func TestEchoServer(t *testing.T) {
     	rootCmd := NewRootCmd()
         b := bytes.NewBufferString("")
         rootCmd.SetOut(b)
-        rootCmd.SetArgs([]string{"--host", HOST, "--port", PORT})
+        rootCmd.SetArgs([]string{"server", "--host", test,host, "--port", test.port})
         go rootCmd.Execute()
 
         time.Sleep(2 * time.Second)  // to ensure the listener to ready to receive client connections
         log.Println("listener goroutine started. client dialling...")
         conn, err := net.Dial("tcp", HOST+":"+PORT)
         if err != nil {
-            t.Error("client could not dial server:", err)
+            t.Error("TestEchoServer could not dial server:", err)
         }
 
-        request := new(pkg.Message)
-        request.Content = test.send
-        request.Metadata = pkg.MetadataSchema{
-            Timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05.0000 MST"),
-            Tag: testName,
-            }
-        result, err := pkg.MakeRequest(*request, conn)
+        result, err := pkg.MakeRequest(test.send, conn)
         if err != nil {
-            t.Error("test client could not make request:", err)
+            t.Error("TestEchoServer could not make request:", err)
         }
 
         if result.Content != test.expected{
-			t.Errorf("Expected result: %s, but got: %s", test.expected, result.Content)
+			t.Errorf("TestEchoServer expected result: %s, but got: %s", test.expected, result.Content)
 		}
     }
 }
