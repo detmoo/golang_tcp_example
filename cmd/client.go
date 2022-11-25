@@ -28,7 +28,7 @@ func runClientCmd(out io.Writer) *cobra.Command {
             if err != nil {
                 return err
             }
-			fmt.Fprintf(out, result)
+			fmt.Fprintf(out, string(json.Marshal(result)))
 			return nil
 		},
 	}
