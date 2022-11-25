@@ -33,7 +33,7 @@ func TestEchoServer(t *testing.T) {
     	rootCmd := newRootCmd(os.Stdout)
         b := bytes.NewBufferString("")
         rootCmd.SetOut(b)
-        rootCmd.SetArgs([]string{"server", "--host", test,host, "--port", test.port})
+        rootCmd.SetArgs([]string{"server", "--host", test.host, "--port", test.port})
         go rootCmd.Execute()
 
         time.Sleep(2 * time.Second)  // to ensure the listener to ready to receive client connections
