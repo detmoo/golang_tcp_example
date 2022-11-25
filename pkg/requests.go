@@ -44,7 +44,7 @@ func (t *Message) parse(data []byte) {
 }
 
 
-func (t *Message) compose(content, tag string) Message {
+func (t *Message) compose(content, tag string) {
     t.Content = content
     t.Metadata = MetadataSchema{
         Timestamp: time.Now().Format("Monday, 02-Jan-06 15:04:05.0000 MST"),
@@ -79,7 +79,8 @@ func HandleIncomingRequest(conn net.Conn) error {
 
 func MakeRequest(content string, conn net.Conn) (answer Message, err error) {
     // prepare message
-    msg := composeMessage(content, getMsgTagFromEnv(CLIENT_MSG_TAG_ENV_VAR))
+    msg := new(Message)
+    msg.compose(content, getMsgTagFromEnv(CLIENT_MSG_TAG_ENV_VAR))
 
     // send
     if err = msg.write(conn); err != nil {
