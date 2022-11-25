@@ -20,7 +20,7 @@ func runClientCmd() *cobra.Command {
 	cmd:= &cobra.Command{
 		Use: "server",
 		Short: "serves a TCP listener that parses requests via the pkg.Message interface which is implemented herein",
-		Args: cobra.ExactArgs(1)
+		Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 		    requestContent := args[0]
             conn, err := net.Dial("tcp", host+":"+port)
