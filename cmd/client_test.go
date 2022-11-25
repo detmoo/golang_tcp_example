@@ -23,7 +23,7 @@ var clientTests = map[string]serverTestCase{
 
 
 func TestEchoClient(t *testing.T) {
-    for testName, test := range clientTests {
+    for _, test := range clientTests {
         // setup a test listener for the client to connect to
         listener, err := net.Listen("tcp", test.host+":"+test.port)
         if err != nil {
