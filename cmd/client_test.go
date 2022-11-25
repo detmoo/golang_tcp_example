@@ -46,7 +46,7 @@ func TestEchoClient(t *testing.T) {
         time.Sleep(2 * time.Second)  // to ensure the listener to ready to receive client connections
         rootCmd.Execute()
 
-		t.Errorf("xxxxxxxxx Failing Test String xxxxxxxxxx")
+		t.Errorf("this is string of b: %s", string(b))
 
     }
 }
