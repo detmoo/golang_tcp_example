@@ -29,10 +29,7 @@ func runClientCmd() *cobra.Command {
                 return err
             }
             jsonStr, _ := json.Marshal(result)
-			fmt.Fprint(out, string(jsonStr))
-			return nil
-
-			fmt.Fprintf(cmd.OutOrStdout(), "%s", res)
+			fmt.Fprintf(cmd.OutOrStdout(), "%s", string(jsonStr))
 			return nil
 		},
 	}
