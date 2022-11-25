@@ -29,7 +29,7 @@ var serverTests = map[string]serverTestCase{
 
 func TestEchoServer(t *testing.T) {
     for testName, test := range serverTests {
-    	rootCmd := NewRootCmd()
+    	rootCmd := newRootCmd()
         b := bytes.NewBufferString("")
         rootCmd.SetOut(b)
         rootCmd.SetArgs([]string{"server", "--host", test,host, "--port", test.port})

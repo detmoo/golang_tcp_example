@@ -39,7 +39,7 @@ func TestEchoClient(t *testing.T) {
         }()
 
         // run the client command
-    	rootCmd := NewRootCmd()
+    	rootCmd := newRootCmd()
         b := bytes.NewBufferString("")
         rootCmd.SetOut(b)
         rootCmd.SetArgs([]string{"client", test.send,"--host", test.host, "--port", test.port})
