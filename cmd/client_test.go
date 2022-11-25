@@ -26,16 +26,14 @@ func TestEchoClient(t *testing.T) {
         // setup a test listener for the client to connect to
         listener, err := net.Listen("tcp", test.host+":"+test.port)
         if err != nil {
-            log.Fatal(err)
-            return err
+            t.Error("TestEchoClient connection error:", err)
         }
 
         // background accepts first client connection
         go func() {
             conn, err := listener.Accept()
             if err != nil {
-                log.Fatal(err)
-                return err
+                t.Error("TestEchoClient listener error:", err)
             }
             pkg.HandleIncomingRequest(conn)
         }()
