@@ -1,12 +1,8 @@
 package cmd
 
 import (
-    "context"
     "fmt"
-	"log"
 	"net"
-	"os"
-    "time"
 
 	"github.com/spf13/cobra"
 
@@ -16,7 +12,7 @@ import (
 var message string
 
 
-func runClientCmd() *cobra.Command {
+func runClientCmd(out io.Writer) *cobra.Command {
 	cmd:= &cobra.Command{
 		Use: "server",
 		Short: "serves a TCP listener that parses requests via the pkg.Message interface which is implemented herein",
@@ -31,9 +27,9 @@ func runClientCmd() *cobra.Command {
             if err != nil {
                 return err
             }
-			return fmt.Fprintf(out, result)
+			fmt.Fprintf(out, result)
+			return nil
 		},
 	}
 	return cmd
 }
-
