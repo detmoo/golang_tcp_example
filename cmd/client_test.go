@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"log"
 	"net"
+	"os"
 	"testing"
 	"time"
 
@@ -39,7 +40,7 @@ func TestEchoClient(t *testing.T) {
         }()
 
         // run the client command
-    	rootCmd := newRootCmd()
+    	rootCmd := newRootCmd(os.Stdout)
         b := bytes.NewBufferString("")
         rootCmd.SetOut(b)
         rootCmd.SetArgs([]string{"client", test.send,"--host", test.host, "--port", test.port})

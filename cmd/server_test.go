@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"log"
 	"net"
+	"os"
 	"testing"
 	"time"
 
@@ -29,7 +30,7 @@ var serverTests = map[string]serverTestCase{
 
 func TestEchoServer(t *testing.T) {
     for testName, test := range serverTests {
-    	rootCmd := newRootCmd()
+    	rootCmd := newRootCmd(os.Stdout)
         b := bytes.NewBufferString("")
         rootCmd.SetOut(b)
         rootCmd.SetArgs([]string{"server", "--host", test,host, "--port", test.port})
