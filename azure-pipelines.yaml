@@ -68,7 +68,7 @@ parameters:
   - name: dockerContainerCommandString
     default: ""
   - name: downloadArtifactCondition
-    default: succeeded()
+    default: eq('1', '0')
   - name: _azure_docker_stage_params
     type: object
     default:
