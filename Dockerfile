@@ -12,8 +12,11 @@ WORKDIR /home/$USER_NAME
 
 COPY go.mod go.sum ./
 RUN go mod download
+RUN cat go.mod
 
-COPY *.go ./
+COPY *.go cmd/ pkg/ ./
+RUN ls -la
+RUN cat go.mod
 RUN mkdir -p $ARTIFACT_PATH
 RUN go build -o ./$ARTIFACT_PATH/$APP_NAME
 
