@@ -133,14 +133,9 @@ stages:
       dockerRunPostSteps:
 
         - script: |
-            status_code=$(curl --write-out %{http_code} --silent --output /dev/null http://localhost:${{parameters.hostPort}}/)
-            if [[ "$status_code" -ne 200 ]] ; then
-              echo "Received status $status_code" Expected 200; exit 1
-            else
-              exit 0
-            fi
-          displayName: "Smoke Test: WebApp"
-          name: SmokeTest_App
+            echo "placeholder thing"
+          displayName: "Placeholder"
+          name: PlaceholderTest
           workingDirectory: ${{parameters.workingDirectory}}
 
   - template: /python/stages/version-stage.yaml@bowdata-toolkits

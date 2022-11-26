@@ -6,7 +6,7 @@ ARG ARTIFACT_PATH=dist
 ARG USER_NAME=$APP_NAME
 ARG CONTAINER_PORT
 
-RUN useradd $USER_NAME
+RUN adduser -g "bowdataappuser" $USER_NAME
 
 WORKDIR /home/$USER_NAME
 
