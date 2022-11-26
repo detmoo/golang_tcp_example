@@ -13,9 +13,6 @@ WORKDIR /home/$USER_NAME
 COPY go.mod go.sum ./
 RUN go mod download
 
-COPY boot.sh ./
-RUN chmod +x boot.sh
-
 COPY *.go ./
 RUN mkdir -p $ARTIFACT_PATH
 RUN go build -o ./$ARTIFACT_PATH/$APP_NAME
