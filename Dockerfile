@@ -15,8 +15,8 @@ RUN go mod download
 RUN cat go.mod
 
 COPY *.go ./
-COPY cmd/ /cmd/
-COPY pkg/ /pkg/
+COPY cmd/ ./cmd/
+COPY pkg/ ./pkg/
 RUN ls -la
 RUN cat go.mod
 RUN mkdir -p $ARTIFACT_PATH
