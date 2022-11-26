@@ -47,9 +47,10 @@ parameters:
   - name: azureDockerStageDependsOn
     type: object
     default: ['Build']
-  # - name: versionStageDependsOn
-  #   type: object
-  #   default: ['AzureDockerStage']
+  - name: artifactName
+    default: 'buildArtifacts'
+  - name: artifactPath
+    default: '.'
   - name: dockerhubServiceConnection
     default: "bd-docker-hub-svc-connection"
   - name: dockerhubRepository  # this defaults to the same value as parameters.appName
@@ -68,7 +69,7 @@ parameters:
   - name: dockerContainerCommandString
     default: ""
   - name: downloadArtifactCondition
-    default: eq('1', '0')
+    default: succeeded()
   - name: _azure_docker_stage_params
     type: object
     default:
@@ -76,6 +77,8 @@ parameters:
       - azureDockerStageCondition
       - azureDockerStageDependsOn
       - dockerhubServiceConnection
+      - artifactName
+      - artifactPath
       - downloadArtifactCondition
       - containerPort
       - hostPort
