@@ -6,7 +6,13 @@ ARG ARTIFACT_PATH=dist
 ARG USER_NAME=$APP_NAME
 ARG CONTAINER_PORT
 
-RUN adduser -D -g "bowdataappuser" $USER_NAME
+RUN getent group
+RUN cat /etc/passwd
+
+RUN adduser -D -g "$USER_NAME" $USER_NAME
+
+RUN getent group
+RUN cat /etc/passwd
 
 WORKDIR /home/$USER_NAME
 
