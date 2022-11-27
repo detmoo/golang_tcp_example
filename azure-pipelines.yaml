@@ -67,9 +67,9 @@ parameters:
     type: object
     default: {}
   - name: supplementaryRunFlags
-    default: ""
+    default: " "
   - name: dockerContainerCommandString
-    default: ""
+    default: "server --host localhost --port 5000"
   - name: downloadArtifactCondition
     default: succeeded()
   - name: _azure_docker_stage_params
