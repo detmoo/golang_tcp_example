@@ -145,7 +145,7 @@ stages:
             containerRuntimeVars:
               BD_CLIENT_TAG: "bd-tcp-client"
             supplementaryRunFlags:
-            dockerContainerCommandString: "client abracadabra --host localhost --port 9001
+            dockerContainerCommandString: "client abracadabra --host localhost --port 9001"
 
   - template: /python/stages/version-stage.yaml@bowdata-toolkits
     parameters:
