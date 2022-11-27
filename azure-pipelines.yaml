@@ -138,6 +138,8 @@ stages:
 
         - template: /containers/steps/docker-run-step.yaml@bowdata-toolkits
           parameters:
+            stepName: RunClientContainer
+            stepDisplayName: "Run Client Container"
             workingDirectory: ${{parameters.workingDirectory}}
             appName: ${{parameters.appName}}
             containerPort: 5001
