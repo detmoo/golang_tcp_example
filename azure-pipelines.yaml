@@ -136,19 +136,25 @@ stages:
           ${{pair.key}}: ${{pair.value}}
       dockerRunPostSteps:
 
-        - template: /containers/steps/docker-run-step.yaml@bowdata-toolkits
-          parameters:
-            stepName: RunClientContainer
-            stepDisplayName: "Run Client Container"
-            workingDirectory: ${{parameters.workingDirectory}}
-            appName: client-${{parameters.appName}}
-            containerPort: 5001
-            hostPort: 8001
-            containerRuntimeVars:
-              BD_CLIENT_TAG: "bd-tcp-client"
-            supplementaryRunFlags:
-            dockerContainerCommandString: "client abracadabra --host localhost --port 9001"
-            buildTag: $(Build.BuildId)
+#        - template: /containers/steps/docker-run-step.yaml@bowdata-toolkits
+#          parameters:
+#            stepName: RunClientContainer
+#            stepDisplayName: "Run Client Container"
+#            workingDirectory: ${{parameters.workingDirectory}}
+#            appName: client-${{parameters.appName}}
+#            containerPort: 5001
+#            hostPort: 8001
+#            containerRuntimeVars:
+#              BD_CLIENT_TAG: "bd-tcp-client"
+#            supplementaryRunFlags:
+#            dockerContainerCommandString: "client abracadabra --host localhost --port 9001"
+#            buildTag: $(Build.BuildId)
+
+        - script: |
+            echo "placeholder thing"
+          displayName: "Placeholder"
+          name: PlaceholderTest
+          workingDirectory: ${{parameters.workingDirectory}}
 
   - template: /python/stages/version-stage.yaml@bowdata-toolkits
     parameters:
