@@ -53,6 +53,8 @@ parameters:
     default: '.'
   - name: dockerhubServiceConnection
     default: "bd-docker-hub-svc-connection"
+  - name: appName
+    default: "bowdata-tcp-echo"
   - name: dockerhubRepository  # this defaults to the same value as parameters.appName
     default: $(Build.Repository.Name)
   - name: dockerhubAccount
@@ -77,6 +79,7 @@ parameters:
       - azureDockerStageCondition
       - azureDockerStageDependsOn
       - dockerhubServiceConnection
+      - appName
       - artifactName
       - artifactPath
       - downloadArtifactCondition
