@@ -28,7 +28,7 @@ RUN cat go.mod
 RUN mkdir -p $ARTIFACT_PATH
 RUN go build -o ./$ARTIFACT_PATH/$APP_NAME
 
-RUN chown -R $USER_NAME:$USER_NAME ./
+RUN chown -R $USER_NAME: ./
 USER $USER_NAME
 
 EXPOSE $CONTAINER_PORT
