@@ -65,11 +65,12 @@ parameters:
     default: 8000
   - name: containerRuntimeVars
     type: object
-    default: {}
+    default:
+      BD_SERVER_TAG: "bd-tcp-server"
   - name: supplementaryRunFlags
     default: " "
   - name: dockerContainerCommandString
-    default: "server --host localhost --port 5000"
+    default: "server --host localhost --port 9000"
   - name: downloadArtifactCondition
     default: succeeded()
   - name: _azure_docker_stage_params
@@ -135,11 +136,16 @@ stages:
           ${{pair.key}}: ${{pair.value}}
       dockerRunPostSteps:
 
-        - script: |
-            echo "placeholder thing"
-          displayName: "Placeholder"
-          name: PlaceholderTest
-          workingDirectory: ${{parameters.workingDirectory}}
+        - template: /containers/steps/docker-run-step.yaml@bowdata-toolkits
+          parameters:
+            workingDirectory: ${{parameters.workingDirectory}}
+            appName: ${{parameters.appName}}
+            containerPort: 5001
+            hostPort: 8001
+            containerRuntimeVars:
+              BD_CLIENT_TAG: "bd-tcp-client"
+            supplementaryRunFlags:
+            dockerContainerCommandString: "client abracadabra --host localhost --port 9001
 
   - template: /python/stages/version-stage.yaml@bowdata-toolkits
     parameters:
