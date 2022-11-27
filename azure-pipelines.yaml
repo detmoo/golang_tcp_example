@@ -141,7 +141,7 @@ stages:
             stepName: RunClientContainer
             stepDisplayName: "Run Client Container"
             workingDirectory: ${{parameters.workingDirectory}}
-            appName: ${{parameters.appName}}
+            appName: client-${{parameters.appName}}
             containerPort: 5001
             hostPort: 8001
             containerRuntimeVars:
