@@ -38,7 +38,7 @@ func runServerCmd() *cobra.Command {
                     select {
                     case <-closureChannel:
                         close(closureChannel)
-                        return err
+                        return nil
                     default:
                         close(closureChannel)
                         log.Fatal(err)
