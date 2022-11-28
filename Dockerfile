@@ -29,4 +29,5 @@ USER $USER_NAME
 
 EXPOSE $CONTAINER_PORT
 ENTRYPOINT ["./boot.sh"]
+CMD ["server", "--host", "localhost", "--port", "5000"]
 ENV BD_CONTAINER_EXEC_PATH=$ARTIFACT_PATH/$APP_NAME
