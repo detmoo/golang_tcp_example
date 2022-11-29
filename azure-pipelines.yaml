@@ -130,20 +130,32 @@ stages:
       dockerRunCommand: "docker run -d --net=host --name ${{parameters.appName}} ${{parameters.appName}}:${{parameters.buildTag}}"
       dockerRunPostSteps:
 
-        - template: /containers/steps/docker-run-step.yaml@bowdata-toolkits
-          parameters:
-            stepName: RunClientContainer
-            stepDisplayName: "Run Client Container"
-            workingDirectory: ${{parameters.workingDirectory}}
-            containerRuntimeVars:
-              BD_CLIENT_TAG: "bd-tcp-client"
-            dockerRunCommand: "docker run -d --net=host --name bd-tcp-client ${{parameters.appName}}:${{parameters.buildTag}} client abracadabra --host localhost --port ${{parameters.containerPort}}"
+#        - template: /containers/steps/docker-run-step.yaml@bowdata-toolkits
+#          parameters:
+#            stepName: RunClientContainer
+#            stepDisplayName: "Run Client Container"
+#            workingDirectory: ${{parameters.workingDirectory}}
+#            containerRuntimeVars:
+#              BD_CLIENT_TAG: "bd-tcp-client"
+#            dockerRunCommand: "docker run -d --net=host --name bd-tcp-client ${{parameters.appName}}:${{parameters.buildTag}} client abracadabra --host localhost --port ${{parameters.containerPort}}"
+#
+#        - template: /containers/steps/docker-logs-step.yaml
+#          parameters:
+#            appName: bd-tcp-client
 
         - script: |
-            echo "placeholder thing"
-          displayName: "Placeholder"
-          name: PlaceholderTest
+            expect_string="TCP listener received: abracadabra"
+            client_recvd=$(docker run --net=host --name bd-tcp-client ${{parameters.appName}}:${{parameters.buildTag}} client abracadabra --host localhost --port ${{parameters.containerPort}})
+            if [[ *"$expect_string"* == $client_recvd" ]] ; then
+              echo "Received $client_recvd from the server: test passed"; exit 0
+            else
+              echo "Received $client_recvd from the server: test failed"; exit 1
+            fi
+          displayName: "Measure Client Receipt"
+          name: ServerClientTest
           workingDirectory: ${{parameters.workingDirectory}}
+          env:
+            BD_CLIENT_TAG: "bd-tcp-client"
 
   - template: /python/stages/version-stage.yaml@bowdata-toolkits
     parameters:
