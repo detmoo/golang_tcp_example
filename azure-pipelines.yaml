@@ -55,6 +55,8 @@ parameters:
     default: "bd-docker-hub-svc-connection"
   - name: appName
     default: "bowdata-tcp-echo"
+  - name: buildTag
+    default: $(Build.BuildId)
   - name: dockerhubRepository  # this defaults to the same value as parameters.appName
     default: $(Build.Repository.Name)
   - name: dockerhubAccount
