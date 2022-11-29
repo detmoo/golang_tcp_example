@@ -144,15 +144,14 @@ stages:
 #            appName: bd-tcp-client
 
         - script: |
-            expect_string="TCP listener received: abracadabra"
-            client_recvd=$(docker run --net=host --name bd-tcp-client ${{parameters.appName}}:${{parameters.buildTag}} client abracadabra --host localhost --port ${{parameters.containerPort}})
-            echo "Client Recvd: $client_recvd"
-            echo "Expected: $expect_string"
-#            if [[ *"$expect_string"* == $client_recvd" ]] ; then
-#              echo "Received $client_recvd from the server: test passed"; exit 0
-#            else
-#              echo "Received $client_recvd from the server: test failed"; exit 1
-#            fi
+            EXPECTED_SUBSTRING="TCP listener received: abracadabra"
+            CLIENT_RECVD=$(docker run --net=host --name bd-tcp-client ${{parameters.appName}}:${{parameters.buildTag}} client abracadabra --host localhost --port ${{parameters.containerPort}})
+            echo "Client Received: $CLIENT_RECVD"
+            if grep -q "$EXPECTED_SUBSTRING" <<< "$CLIENT_RECVD"; then
+              echo "server-client test passed"; exit 0
+            else
+              echo "server-client test failed"; exit 1
+            fi
           displayName: "Measure Client Receipt"
           name: ServerClientTest
           workingDirectory: ${{parameters.workingDirectory}}
