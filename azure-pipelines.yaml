@@ -137,7 +137,7 @@ stages:
             workingDirectory: ${{parameters.workingDirectory}}
             containerRuntimeVars:
               BD_CLIENT_TAG: "bd-tcp-client"
-            dockerRunCommand: "docker run -d --net=host --name bd-tcp-client td-tcp-server client abracadabra --host localhost --port ${{parameters.containerPort}}"
+            dockerRunCommand: "docker run -d --net=host --name bd-tcp-client bd-tcp-server client abracadabra --host localhost --port ${{parameters.containerPort}}"
 
         - script: |
             echo "placeholder thing"
