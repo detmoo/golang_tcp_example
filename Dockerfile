@@ -30,4 +30,4 @@ USER $USER_NAME
 EXPOSE $CONTAINER_PORT
 ENV EXECUTABLE=$ARTIFACT_PATH/$APP_NAME
 ENTRYPOINT ["./boot.sh"]
-CMD ["server", "--host", "localhost", "--port", "5000"]
+CMD ["server", "--host", "localhost", "--port", "5000", "--duration", "60s"]

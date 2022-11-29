@@ -61,16 +61,10 @@ parameters:
     default: "bowdatadockerhub"
   - name: containerPort
     default: 5000
-  - name: hostPort
-    default: 8000
   - name: containerRuntimeVars
     type: object
     default:
       BD_SERVER_TAG: "bd-tcp-server"
-  - name: supplementaryRunFlags
-    default: " "
-  - name: dockerContainerCommandString
-    default: "server --host localhost --port 5000"
   - name: downloadArtifactCondition
     default: succeeded()
   - name: _azure_docker_stage_params
@@ -85,10 +79,7 @@ parameters:
       - artifactPath
       - downloadArtifactCondition
       - containerPort
-      - hostPort
       - containerRuntimeVars
-      - supplementaryRunFlags
-      - dockerContainerCommandString
       - dockerhubAccount
       - dockerhubRepository
 ## Version Stage Parameter Set
@@ -134,21 +125,17 @@ stages:
       ${{ each pair in parameters }}:
         ${{if and(or(containsValue(parameters._azure_docker_stage_params, pair.key), containsValue(parameters._general_params, pair.key)), not(containsValue(parameters._ignore_params, pair.key)))}}:
           ${{pair.key}}: ${{pair.value}}
+      dockerRunCommand: "docker run -d --net=host --name ${{parameters.appName}} ${{parameters.appName}}:${{parameters.buildTag}}"
       dockerRunPostSteps:
 
-#        - template: /containers/steps/docker-run-step.yaml@bowdata-toolkits
-#          parameters:
-#            stepName: RunClientContainer
-#            stepDisplayName: "Run Client Container"
-#            workingDirectory: ${{parameters.workingDirectory}}
-#            appName: client-${{parameters.appName}}
-#            containerPort: 5001
-#            hostPort: 8001
-#            containerRuntimeVars:
-#              BD_CLIENT_TAG: "bd-tcp-client"
-#            supplementaryRunFlags:
-#            dockerContainerCommandString: "client abracadabra --host localhost --port 9001"
-#            buildTag: $(Build.BuildId)
+        - template: /containers/steps/docker-run-step.yaml@bowdata-toolkits
+          parameters:
+            stepName: RunClientContainer
+            stepDisplayName: "Run Client Container"
+            workingDirectory: ${{parameters.workingDirectory}}
+            containerRuntimeVars:
+              BD_CLIENT_TAG: "bd-tcp-client"
+            dockerRunCommand: "docker run -d --net=host --name bd-tcp-client td-tcp-server client abracadabra --host localhost --port ${{parameters.containerPort}}"
 
         - script: |
             echo "placeholder thing"
