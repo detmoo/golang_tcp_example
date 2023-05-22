@@ -1,7 +1,8 @@
 bowdata.test.go_tcp_echo
 =========================
 
-
+This Go Module provides a Cobra CLI that runs a TCP client or alternatively a corresponding TCP server/listener. 
+The CLI can be called via e.g. a Dockerfile that installs the Go Module into a container.   
 
 
 Introduction
